@@ -7,7 +7,7 @@ def Menu_Principal():
 
 def Menu_Player():
     print("bienvenue dans le menu des joueurs \n")
-    print("voulez-vous : \n \t 1 - afficher la liste des joueurs \n \t 2 - creer un nouveau joueur ")
+    print("voulez-vous : \n \t 1 - afficher la liste des joueurs \n \t 2 - creer un nouveau joueur \n \t 0 - quitter")
     response = int(input("=>"))
     return response
 

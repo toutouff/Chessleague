@@ -17,9 +17,10 @@ def Print_Player_All():
         i += 1
 
 
-response_Principale = Menu_Principal()
-while response_Principale !=0:
-    if response_Principale == 1:
+response_Principal = Menu_Principal()
+
+while response_Principal !=0:
+    if response_Principal == 1:
         response_Player = Menu_Player()
         if response_Player == 1:
             Print_Player_All()
