@@ -2,27 +2,55 @@ from model import Player
 from view import *
 
 
-def newPlayer():
-    info_Player = view_newPlayer()
-    Player(info_Player['nom'], info_Player['age'])
+class PlayerController:
+    @staticmethod
+    def NewPlayer():
+        Player(ViewPlayer.view_newPlayer())
+
+    @staticmethod
+    def PrintAllPlayer():
+        print(Player.All())
+
+    @staticmethod
+    def PlayerMenu():
+        is_open = True
+        while is_open:
+            response = ViewPlayer.MenuPlayer()
+            if response == 1:
+                PlayerController.PrintAllPlayer()
+            elif response == 2:
+                PlayerController.NewPlayer()
+            elif response == 3:
+                Player.Reset()
+            elif response == 0:
+                is_open = False
 
 
-def Print_Player_All():
-    allPlayerList = Player.All()
-    i = 1
-    for player in allPlayerList:
-        name = player['name']
-        age = player['age']
-        view_Info_Player(i, name, age)
-        i += 1
+class MainController:
+    @staticmethod
+    def MainMenu():
+        is_open = True
+        while is_open:
+            response = ViewMain.Menu_Principal()
+            if response == 1:
+                PlayerController.PlayerMenu()
+            elif response == 2:
+                TournamentController.TournamentMenu()
+            elif response == 0:
+                print("vous avez quitter")
+                is_open = False
 
 
-response_Principal = Menu_Principal()
-
-while response_Principal !=0:
-    if response_Principal == 1:
-        response_Player = Menu_Player()
-        if response_Player == 1:
-            Print_Player_All()
-        if response_Player == 2:
-            newPlayer()
+class TournamentController:
+    @staticmethod
+    def TournamentMenu():
+        is_open = True
+        while is_open:
+            response = ViewTournament.MenuTournament()
+            if response == 1:
+                TournamentController.NewTournament()
+            elif response == 0:
+                is_open = False
+    @staticmethod
+    def NewTournament():
+        print(ViewTournament.NewTournament())
