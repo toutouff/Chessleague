@@ -1,5 +1,3 @@
-from controler import *
+from Controler import Main
 
-from model import *
-
-MainController.MainMenu()
+Main.MainController.MainMenu()
