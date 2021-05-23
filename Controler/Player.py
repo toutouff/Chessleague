@@ -10,8 +10,14 @@ class PlayerController:
         temp_player.Save()
 
     @staticmethod
-    def PrintAllPlayer():
-        print(Model.Player.Player.All())
+    def PrintAllPlayer(players_list):
+        i = 0
+        for player in players_list:
+            name = player.name
+            first_name = player.first_name
+            i = i + 1
+            View.Player.View.view_Info_Player(i,name,first_name)
+
 
     @staticmethod
     def PlayerMenu():
@@ -19,7 +25,8 @@ class PlayerController:
         while is_open:
             response = View.Player.View.MenuPlayer()
             if response == 1:
-                PlayerController.PrintAllPlayer()
+                players_list = Model.Player.Player.All()
+                PlayerController.PrintAllPlayer(players_list)
             elif response == 2:
                 PlayerController.NewPlayer()
             elif response == 3:

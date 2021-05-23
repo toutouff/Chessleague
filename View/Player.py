@@ -23,7 +23,7 @@ class View:
         return info_player
 
     @staticmethod
-    def view_Info_Player(i, name, age):
+    def view_Info_Player(i, name, first_name):
         print('\tjoueurs #' + str(i))
         print('name : ' + name)
-        print('age : ' + age + '\n')
+        print('age : ' + first_name + '\n')

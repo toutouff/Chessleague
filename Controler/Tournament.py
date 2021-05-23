@@ -2,6 +2,7 @@ import Model.Tournament
 import View.Tournament
 import Model.Player
 import View.Player
+import Controler.Player
 from tinydb import *
 
 
@@ -37,7 +38,7 @@ class TournamentController:
         while is_open:
             response = View.Tournament.View.MenuActiveTournament(tournament)
             if response == 1:
-                print(tournament.players_data)
+                Controler.Player.PlayerController.PrintAllPlayer(tournament.players_list)
             elif response == 2:
                 temp_player = cls.NewPlayer()
                 tournament.AddPlayer(temp_player)
@@ -67,6 +68,7 @@ class TournamentController:
 
     @classmethod
     def InitPlayerByName(cls):
+        Controler.Player.PlayerController.PrintAllPlayer(Model.Player.Player.All())
         player = Query()
         player_name = input("=>")
         db = TinyDB('db.json')

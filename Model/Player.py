@@ -21,7 +21,10 @@ class Player:
 
     @staticmethod
     def All():
+        players_list = []
         db = TinyDB('db.json')
         players_table = db.table('players')
-        return players_table.all()
-# instancier tout les joueurs dans un tableau et retourner le tab
+        for player in players_table:
+            players_list.append(Player(player))
+        return players_list
+
