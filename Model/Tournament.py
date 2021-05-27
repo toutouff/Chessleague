@@ -3,13 +3,14 @@ from tinydb import *
 
 class Tournament:
     def __init__(self, info_tournament):
-        self.data_tournament = info_tournament
-        self.name = self.data_tournament['name']
-        self.location = self.data_tournament['location']
-        self.start_day = self.data_tournament['start_day']
-        self.end_day = self.data_tournament['end_day']
-        self.month = self.data_tournament['month']
-        self.year = self.data_tournament['year']
+        self.info_tournament = info_tournament
+        self.data_tournament = {}
+        self.name = self.info_tournament['name']
+        self.location = self.info_tournament['location']
+        self.start_day = self.info_tournament['start day']
+        self.end_day = self.info_tournament['end day']
+        self.month = self.info_tournament['month']
+        self.year = self.info_tournament['year']
         self.turn = 0
         self.number_of_player = 0
         self.players_list = []
@@ -26,11 +27,31 @@ class Tournament:
         tournament_table = db.table('Tournament')
         tournament_table.insert(self.data_tournament)
 
+    def UpdatePlayersList(self):
+        db = TinyDB('db.json')
+        tournament_table = db.table('Tournament')
+        tournament = Query()
+        #tournament_table.update(self.players_data, tournament['name'] == self.name)
+
+
     def Serialize(self):
         self.data_tournament = {
             'name': self.name,
             'location': self.location,
-            'start date': str(self.start_day + '/' + self.month + '/' + self.year),
-            'end date': str(self.end_day + '/' + self.month + '/' + self.year),
+            'start day': str(self.start_day),
+            'end day': str(self.end_day),
+            'month': str(self.month),
+            'year': str(self.year),
             'player list': self.players_data
         }
+
+    @staticmethod
+    def All():
+        tournament_list = []
+        db = TinyDB('db.json')
+        tournament_table = db.table('Tournament')
+        for tournament in tournament_table:
+
+            tournament_list.append(Tournament(tournament))
+        return tournament_list
+

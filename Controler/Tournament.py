@@ -28,6 +28,12 @@ class TournamentController:
                 if response == 1:
                     tournament = cls.NewTournament()
                     tournament_exist = True
+                elif response == 2:
+                    tournament_list = Model.Tournament.Tournament.All()
+                    cls.PrintAllTournament(tournament_list)
+                elif response == 3:
+                    tournament = cls.InitTournament()
+                    tournament_exist = True
                 elif response == 0:
                     is_open = False
 
@@ -42,7 +48,7 @@ class TournamentController:
             elif response == 2:
                 temp_player = cls.NewPlayer()
                 tournament.AddPlayer(temp_player)
-                tournament.Save()
+                tournament.save()
             elif response == 3:
                 print("\t soon \n")
                 print("tu sais ce qui te reste a faire")
@@ -64,6 +70,7 @@ class TournamentController:
     def NewPlayer(cls):
         info_player = View.Player.View.new_player()
         temp_player = Model.Player.Player(info_player)
+        temp_player.Save()
         return temp_player
 
     @classmethod
@@ -77,3 +84,28 @@ class TournamentController:
         result = result[0]
         temp_player = Model.Player.Player(result)
         return temp_player
+
+    @staticmethod
+    def PrintAllTournament(tournament_list):
+        i = 0
+        for tournament in tournament_list:
+            i = i + 1
+            View.Tournament.View.ViewInfoTournament(i, tournament)
+
+    @classmethod
+    def InitTournament(cls):
+        i = 0
+        tournament_list = Model.Tournament.Tournament.All()
+        cls.PrintAllTournament(tournament_list)
+        tournament = Query()
+        db = TinyDB('db.json')
+        table = db.table('Tournament')
+        result_list = table.search(tournament.location == input('indiquer la location du tournoie :\n=>'))
+        for result in result_list:
+            i = i + 1
+            print('#' + str(i), result)
+        print('veuillez indiquer le numero du tournoi : ')
+        chosen_result_id = input('=>')
+        result = result_list[(int(chosen_result_id))-1]
+        tournament = Model.Tournament.Tournament(result)
+        return tournament

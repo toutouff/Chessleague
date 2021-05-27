@@ -4,6 +4,8 @@ class View:
         print("bienvenu dans le menu des tournois")
         print("voulez-vous : ")
         print("\t 1 - creer un nouveau tournois")
+        print("\t 2 - afficher tout les tournois ")
+        print("\t 3 - initialiser un tournoi")
         print("\t 0 - menu principal")
         response = int(input("=> "))
         return response
@@ -15,8 +17,8 @@ class View:
         info_tournois = {
             "name": input("nom du tournois: "),
             "location": input("location du tournoi: "),
-            "start_day": input("jour de debut: "),
-            "end_day": input("jour de fin: "),
+            "start day": input("jour de debut: "),
+            "end day": input("jour de fin: "),
             "month": input("mois: "),
             "year": input("année: ")
         }
@@ -48,3 +50,9 @@ class View:
         print("\t 0 - menu principal")
         response = int(input("=> "))
         return response
+
+    @staticmethod
+    def ViewInfoTournament(i, tournament):
+        print('\tTournoi #' + str(i))
+        print('name : ' + tournament.name)
+        print('location : ' + tournament.location + '\n')

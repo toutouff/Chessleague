@@ -26,4 +26,4 @@ class View:
     def view_Info_Player(i, name, first_name):
         print('\tjoueurs #' + str(i))
         print('name : ' + name)
-        print('age : ' + first_name + '\n')
+        print('prenom : ' + first_name + '\n')
