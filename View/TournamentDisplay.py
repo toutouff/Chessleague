@@ -17,8 +17,8 @@ class View:
         info_tournois = {
             "name": input("nom du tournois: "),
             "location": input("location du tournoi: "),
-            "start day": input("jour de debut: "),
-            "end day": input("jour de fin: "),
+            "start_day": input("jour de debut: "),
+            "end_day": input("jour de fin: "),
             "month": input("mois: "),
             "year": input("année: ")
         }

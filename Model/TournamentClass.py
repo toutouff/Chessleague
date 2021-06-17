@@ -51,7 +51,6 @@ class Tournament:
         db = TinyDB('db.json')
         tournament_table = db.table('Tournament')
         for tournament in tournament_table:
-
             tournament_list.append(Tournament(tournament))
         return tournament_list
 

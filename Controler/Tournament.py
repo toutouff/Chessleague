@@ -1,9 +1,9 @@
-import Model.Tournament
-import View.Tournament
-import Model.Player
-import View.Player
-import Controler.Player
+from Model import PlayerClass
+from View import PlayerDisplay
+from Controler import Player
 from tinydb import *
+from Model import TournamentClass
+from View import TournamentDisplay
 
 
 class TournamentController:
@@ -15,7 +15,7 @@ class TournamentController:
         tournament_exist = False
         while is_open:
             if tournament_exist:
-                response = View.Tournament.View.MenuTournamentInitialized(tournament)
+                response = TournamentDisplay.View.MenuTournamentInitialized(tournament)
                 if response == 1:
                     tournament = cls.NewTournament()
                     tournament_exist = True
@@ -24,12 +24,12 @@ class TournamentController:
                 elif response == 0:
                     is_open = False
             else:
-                response = View.Tournament.View.MenuTournament()
+                response = TournamentDisplay.View.MenuTournament()
                 if response == 1:
                     tournament = cls.NewTournament()
                     tournament_exist = True
                 elif response == 2:
-                    tournament_list = Model.Tournament.Tournament.All()
+                    tournament_list = TournamentClass.Tournament.All()
                     cls.PrintAllTournament(tournament_list)
                 elif response == 3:
                     tournament = cls.InitTournament()
@@ -42,9 +42,9 @@ class TournamentController:
         tournament = tournament
         is_open = True
         while is_open:
-            response = View.Tournament.View.MenuActiveTournament(tournament)
+            response = TournamentDisplay.View.MenuActiveTournament(tournament)
             if response == 1:
-                Controler.Player.PlayerController.PrintAllPlayer(tournament.players_list)
+                Player.PlayerController.PrintAllPlayer(tournament.players_list)
             elif response == 2:
                 temp_player = cls.NewPlayer()
                 tournament.AddPlayer(temp_player)
@@ -62,27 +62,27 @@ class TournamentController:
 
     @classmethod
     def NewTournament(cls):
-        tournament = Model.Tournament.Tournament(View.Tournament.View.NewTournament())
+        tournament = TournamentClass.Tournament(TournamentDisplay.View.NewTournament())
         tournament.Save()
         return tournament
 
     @classmethod
     def NewPlayer(cls):
-        info_player = View.Player.View.new_player()
-        temp_player = Model.Player.Player(info_player)
+        info_player = PlayerDisplay.View.new_player()
+        temp_player = PlayerClass.Player(info_player)
         temp_player.Save()
         return temp_player
 
     @classmethod
     def InitPlayerByName(cls):
-        Controler.Player.PlayerController.PrintAllPlayer(Model.Player.Player.All())
+        Player.PlayerController.PrintAllPlayer(PlayerClass.Player.All())
         player = Query()
         player_name = input("=>")
         db = TinyDB('db.json')
         table = db.table('players')
         result = table.search(player.nom == player_name)
         result = result[0]
-        temp_player = Model.Player.Player(result)
+        temp_player = PlayerClass.Player(result)
         return temp_player
 
     @staticmethod
@@ -90,12 +90,12 @@ class TournamentController:
         i = 0
         for tournament in tournament_list:
             i = i + 1
-            View.Tournament.View.ViewInfoTournament(i, tournament)
+            TournamentDisplay.View.ViewInfoTournament(i, tournament)
 
     @classmethod
     def InitTournament(cls):
         i = 0
-        tournament_list = Model.Tournament.Tournament.All()
+        tournament_list = TournamentClass.Tournament.All()
         cls.PrintAllTournament(tournament_list)
         tournament = Query()
         db = TinyDB('db.json')
@@ -107,5 +107,5 @@ class TournamentController:
         print('veuillez indiquer le numero du tournoi : ')
         chosen_result_id = input('=>')
         result = result_list[(int(chosen_result_id))-1]
-        tournament = Model.Tournament.Tournament(result)
+        tournament = TournamentClass.Tournament(result)
         return tournament
