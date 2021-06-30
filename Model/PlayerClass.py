@@ -3,6 +3,10 @@ from tinydb import *
 
 class Player:
     def __init__(self, info_player):
+        """
+        store : name,first,birthdate,rank
+        :param info_player:
+        """
         self.data_player = info_player
         self.name = self.data_player['nom']
         self.first_name = self.data_player['prenom']
