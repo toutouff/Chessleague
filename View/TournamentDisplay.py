@@ -15,9 +15,8 @@ def MenuTournament():
 
 def NewTournament():
     """
-    menu for creating a new tournament
-    :return:
-    info_tournament: dict: contains all the info for a new tournament
+    ask info with input for creating a new tournament
+    :return: info_tournament: dict: contains all the info for a new tournament
     """
     print("bienvenue sur la page de creation de tournoi")
     print("creation d'un nouveau tournois")
@@ -71,7 +70,8 @@ def MenuActiveTournament(tournament):
 
 def ViewInfoTournament(i, tournament):
     """
-    print the basic info of a tournament ideal to print a enumeration of tournament
+    print the basic info of a tournament
+    ideal to print a enumeration of tournament
     :param i: index of the tournament
     :param tournament: instance of Tournament class
     :return: nothing
