@@ -19,8 +19,8 @@ class Tournament:
         self.turn = 0
         self.number_of_player = 0
         self.players_list = []
-        self.players_data = []
-        self.db_id = 0
+        self.players_data = self.data_tournament['player_list']
+        self.db_id = [1]
 
     def AddPlayer(self, temp_player):
         """
@@ -41,7 +41,7 @@ class Tournament:
         self.SerializeDataTournament()
         db = TinyDB('db.json')
         tournament_table = db.table('Tournament')
-        int(tournament_table.insert(self.data_tournament))
+        self.db_id = tournament_table.insert(self.data_tournament)
 
     def UpdatePlayersList(self):
         """
@@ -50,7 +50,7 @@ class Tournament:
         """
         db = TinyDB('db.json')
         tournament_table = db.table('Tournament')
-        tournament_table.update(fields=self.SerializeDataTournament(), doc_ids=[1])
+        tournament_table.update(fields=self.SerializeDataTournament(), doc_ids=self.db_id)
 
     def SerializeDataTournament(self):
         """
