@@ -19,7 +19,7 @@ def TournamentMenu():
                 tournament = NewTournament()
                 tournament_exist = True
             elif response == 2:
-                cls.ActiveTournamentMenu(tournament)
+                ActiveTournamentMenu(tournament)
             elif response == 0:
                 is_open = False
         else:
@@ -116,7 +116,7 @@ def PrintAllTournament(tournament_list):
 def InitTournament():
     i = 0
     tournament_list = TournamentClass.Tournament.All()
-    cls.PrintAllTournament(tournament_list)
+    PrintAllTournament(tournament_list)
     tournament = Query()
     db = TinyDB('db.json')
     table = db.table('Tournament')

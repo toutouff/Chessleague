@@ -11,11 +11,11 @@ def MainMenu():
     """
     is_open = True
     while is_open:
-        response = MainDisplay.ViewMain.Menu_Principal()
+        response = MainDisplay.Menu_Principal()
         if response == 1:
-            Player.PlayerController.PlayerMenu()
+            Player.PlayerMenu()
         elif response == 2:
-            Tournament.TournamentController.TournamentMenu()
+            Tournament.TournamentMenu()
         elif response == 0:
             print("vous avez quitter")
             is_open = False
