@@ -52,7 +52,6 @@ def ActiveTournamentMenu(tournament):
         elif response == 2:
             temp_player = NewPlayer()
             tournament.AddPlayer(temp_player)
-            tournament.save()
         elif response == 3:
             print("\t soon \n")
             print("tu sais ce qui te reste a faire")
