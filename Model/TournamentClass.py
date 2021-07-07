@@ -19,7 +19,7 @@ class Tournament:
         self.turn = 0
         self.number_of_player = 0
         self.players_list = []
-        self.players_data = self.data_tournament['player_list']
+        self.players_data = []
         self.db_id = [1]
 
     def AddPlayer(self, temp_player):

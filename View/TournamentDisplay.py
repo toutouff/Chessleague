@@ -6,8 +6,8 @@ def MenuTournament():
     print("bienvenu dans le menu des tournois")
     print("voulez-vous : ")
     print("\t 1 - creer un nouveau tournois")
-    print("\t 2 - afficher tout les tournois ") #this line bealong to the rapport menu
-    print("\t 3 - initialiser un tournoi") #does it's still work well ?
+    print("\t 2 - afficher tout les tournois ")  # this line bealong to the rapport menu
+    print("\t 3 - initialiser un tournoi")  # does it's still work well ?
     print("\t 0 - menu principal")
     response = int(input("=> "))
     return response
@@ -40,7 +40,7 @@ def MenuTournamentInitialized(tournament):
     print("bienvenu dans le menu des tournois ")
     print("un tournoi est actuellement initialiser \n"
           "\tNom du tournoi : " + tournament.name + "\n"
-                                                    "\tVille du tournoi : " + tournament.location)
+         "\tVille du tournoi : " + tournament.location)
     print("voulez-vous : ")
     print("\t 1 - creer un nouveau tournois")
     print("\t 2 - acceder au tournoi initialisé")
