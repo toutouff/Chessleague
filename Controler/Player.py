@@ -24,7 +24,7 @@ def PrintAllPlayer(players_list):
         name = player.name
         first_name = player.first_name
         i = i + 1
-        PlayerDisplay.ViewInfoPlayer(i, name, first_name)
+        PlayerDisplay.ViewInfoPlayer(name, first_name, i)
 
 
 def PlayerMenu():

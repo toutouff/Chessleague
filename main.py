@@ -1,3 +1,4 @@
 from Controler import Main
 
-Main.MainController.MainMenu()
+if __name__ == '__main__':
+    Main.MainMenu()

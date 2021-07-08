@@ -19,7 +19,7 @@ def TournamentMenu():
                 tournament = NewTournament()
                 tournament_exist = True
             elif response == 2:
-                cls.ActiveTournamentMenu(tournament)
+                ActiveTournamentMenu(tournament)
             elif response == 0:
                 is_open = False
         else:
@@ -31,7 +31,8 @@ def TournamentMenu():
                 tournament_list = TournamentClass.Tournament.All()
                 PrintAllTournament(tournament_list)
             elif response == 3:
-                tournament = InitTournament()
+                tournament = init_tournament()
+                            # tournament = InitTournament()
                 tournament_exist = True
             elif response == 0:
                 is_open = False
@@ -52,15 +53,13 @@ def ActiveTournamentMenu(tournament):
         elif response == 2:
             temp_player = NewPlayer()
             tournament.AddPlayer(temp_player)
-            tournament.save()
         elif response == 3:
             print("\t soon \n")
             print("tu sais ce qui te reste a faire")
             print("\t soon \n")
         elif response == 4:
-            init_player = InitPlayerByName()
-            tournament.AddPlayer(init_player)
-            tournament.Save()
+            player = InitPlayerByName()
+            tournament.AddPlayer(player)
         elif response == 0:
             is_open = False
 
@@ -90,15 +89,19 @@ def NewPlayer():
 
 def InitPlayerByName():
     """i have to"""
-    Player.PrintAllPlayer(PlayerClass.Player.All())
-    player = Query()
-    player_name = input("=>")
+    i = 1
     db = TinyDB('db.json')
-    table = db.table('players')
-    result = table.search(player.nom == player_name)
-    result = result[0]
-    temp_player = PlayerClass.Player(result)
-    return temp_player
+    players_table = db.table('players')
+    players_list = players_table.all()
+    for player in players_list:
+        player = PlayerClass.Player(player)
+        PlayerDisplay.ViewInfoPlayer(str(player.name), str(player.first_name), i)
+        i+=1
+    print('veuillez indiquer le numero du joueur : ')
+    result_id = int(input('=>'))
+    player_data = players_table.get(doc_id=result_id)
+    player = PlayerClass.Player(dict(player_data))
+    return player
 
 
 def PrintAllTournament(tournament_list):
@@ -113,19 +116,22 @@ def PrintAllTournament(tournament_list):
         TournamentDisplay.ViewInfoTournament(i, tournament)
 
 
-def InitTournament():
+def init_tournament():
     i = 0
-    tournament_list = TournamentClass.Tournament.All()
-    cls.PrintAllTournament(tournament_list)
-    tournament = Query()
     db = TinyDB('db.json')
-    table = db.table('Tournament')
-    result_list = table.search(tournament.location == input('indiquer la location du tournoie :\n=>'))
-    for result in result_list:
-        i = i + 1
-        print('#' + str(i), result)
+    tournament_table = db.table('Tournament')
+    tournament_list = tournament_table.all()
+    for tournament_data in tournament_list:
+        tournament = TournamentClass.Tournament(tournament_data)
+        i = i+1
+        TournamentDisplay.ViewInfoTournament(i, tournament)
     print('veuillez indiquer le numero du tournoi : ')
-    chosen_result_id = input('=>')
-    result = result_list[(int(chosen_result_id)) - 1]
-    tournament = TournamentClass.Tournament(result)
+    result_id = int(input('=>'))
+    tournament_data = tournament_table.get(doc_id=result_id)
+    tournament = TournamentClass.Tournament(dict(tournament_data))
+    tournament_playerslist = tournament_data['player_list']
+    for player in tournament_playerslist:
+        player = PlayerClass.Player(player)
+        tournament.AddPlayer(player)
+        print('jai le joueurs')
     return tournament
