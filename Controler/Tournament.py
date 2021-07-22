@@ -54,12 +54,12 @@ def ActiveTournamentMenu(tournament):
             temp_player = NewPlayer()
             tournament.AddPlayer(temp_player)
         elif response == 3:
-            print("\t soon \n")
-            print("tu sais ce qui te reste a faire")
-            print("\t soon \n")
+            tournament.launch()
         elif response == 4:
             player = InitPlayerByName()
             tournament.AddPlayer(player)
+        elif response == 5:
+            end_a_match(tournament)
         elif response == 0:
             is_open = False
 
@@ -117,14 +117,13 @@ def PrintAllTournament(tournament_list):
 
 
 def init_tournament():
-    i = 0
     db = TinyDB('db.json')
     tournament_table = db.table('Tournament')
     tournament_list = tournament_table.all()
-    for tournament_data in tournament_list:
+    for i, tournament_data in enumerate(tournament_list):#
+        print(i)
         tournament = TournamentClass.Tournament(tournament_data)
-        i = i+1
-        TournamentDisplay.ViewInfoTournament(i, tournament)
+        TournamentDisplay.ViewInfoTournament(i+1, tournament)#
     print('veuillez indiquer le numero du tournoi : ')
     result_id = int(input('=>'))
     tournament_data = tournament_table.get(doc_id=result_id)
@@ -135,3 +134,14 @@ def init_tournament():
         tournament.AddPlayer(player)
         print('jai le joueurs')
     return tournament
+
+
+def end_a_match(tournament):
+    turn = tournament.active_turn
+    for i, match in enumerate(turn.match_list):
+        TournamentDisplay.ViewInfoMatch(match.player1, match.player2 , i)
+    response = input('quelle match est fini ?\n=> ')
+    match = turn.match_list[int(response)-1]
+    match.get_result()
+    print(match.player1.score_in_game)
+    print(match.player2.score_in_game)

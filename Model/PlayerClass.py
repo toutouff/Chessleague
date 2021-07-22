@@ -11,6 +11,7 @@ class Player:
         self.name = self.data_player['nom']
         self.first_name = self.data_player['prenom']
         self.rank = self.data_player['rank']
+        self.score_in_game = 0
 
     def Save(self):
         """
