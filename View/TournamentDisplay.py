@@ -23,6 +23,7 @@ def NewTournament():
     info_tournament = {
         "name": input("nom du tournois: "),
         "location": input("location du tournoi: "),
+        "number_of_player": input("nombres de joueurs")
         "start_day": input("jour de debut: "),
         "end_day": input("jour de fin: "),
         "month": input("mois: "),
@@ -63,6 +64,9 @@ def MenuActiveTournament(tournament):
     print("\t 1 - afficher la liste des joueurs ")
     print("\t 2 - creer un nouveau joueur ")
     print("\t 4 - Initaliser un joueur depuis la base de donné")
+    print("\t 3 - creer le premier tour")
+
+    print("\t 5 - entrez un resultat")
     print("\t 0 - menu principal")
     response = int(input("=> "))
     return response
