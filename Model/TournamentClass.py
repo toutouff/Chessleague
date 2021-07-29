@@ -1,5 +1,7 @@
-import depending as depending
 from tinydb import *
+from tinydb.table import Document
+
+from Model.TurnClass import Turn
 
 
 class Tournament:
@@ -9,6 +11,7 @@ class Tournament:
                 and description
         :param info_tournament:
         """
+        self.turn_list = []
         self.info_tournament = info_tournament
         self.data_tournament = info_tournament
         self.name = self.info_tournament['name']
@@ -19,17 +22,22 @@ class Tournament:
         self.year = self.info_tournament['year']
         self.active_turn = 0
         self.number_of_player = int(self.info_tournament['number_of_player']) or 8
-        self.turn_list = [Turn] * 8
+        for i in range(int(self.number_of_player / 2)):
+            self.turn_list.append(Turn('Turn #'+str(i), self.number_of_player))
         self.players_list = []
         self.players_data = []
-        self.db_id = []  # trouver solution pour pu avoir list
+        self.db_id = 1
+        """self.serialized_turn_list = None"""
 
     def launch(self):
-        turn = Turn()
-        turn.get_pairs_list()
-        self.turn_list.append(turn)
-        turn.generate_match()
         self.active_turn = self.turn_list[0]
+        self.active_turn.get_pairs_list(pairs_generator_for_turn_1(self.players_list))
+        self.active_turn.generate_match()
+
+    def nextTurn(self):
+        self.active_turn = self.turn_list[self.turn_list.index(self.active_turn) + 1]
+        self.active_turn.get_pairs_list(pairs_generator(self.players_list))
+        self.active_turn.generate_match()
 
     def AddPlayer(self, temp_player):
         """
@@ -39,8 +47,7 @@ class Tournament:
         """
         self.players_list.append(temp_player)
         self.players_data.append(temp_player.data_player)
-        self.number_of_player = self.number_of_player + 1
-        self.UpdatePlayersList()
+        print(self.players_data)
 
     def Save(self):
         """
@@ -59,7 +66,9 @@ class Tournament:
         """
         db = TinyDB('db.json')
         tournament_table = db.table('Tournament')
-        tournament_table.update(fields=self.SerializeDataTournament(), doc_ids=self.db_id)
+        print('le joueurs a ete ajouter a la db ', self.db_id)
+        tournament_data = self.SerializeDataTournament()
+        tournament_table.update({'player_list': self.players_data}, doc_ids=[self.db_id])
 
     def SerializeDataTournament(self):
         """
@@ -69,13 +78,15 @@ class Tournament:
         self.data_tournament = {
             'name': self.name,
             'location': self.location,
+            'number_of_player': self.number_of_player,
             'start_day': str(self.start_day),
             'end_day': str(self.end_day),
             'month': str(self.month),
             'year': str(self.year),
-            'player_list': self.players_data
+            'player_list': self.players_data,
+            'turn_list': self.serialized_turn
         }
-        return self.data_tournament
+        return dict(self.data_tournament)
 
     @staticmethod
     def All():
@@ -90,65 +101,21 @@ class Tournament:
             tournament_list.append(Tournament(tournament))
         return tournament_list
 
-    """ask if it needs to go to another file or in a main file"""
-
-
-class Turn:
-    def __init__(self):
-        self.pairs_list = []
-        self.is_over = False
-        self.match_list = []
-
-    def get_pairs_list(self, pairs_list):
-        self.pairs_list = pairs_list
-
-    def generate_match(self):
-        for pair in self.pairs_list:
-            match = Match()
-            self.match_list.append(match)
-
-
-class Match:
-    def __init__(self, ):
-        self.pair = []
-        self.player1 = None
-        self.player2 = None
-        self.results = ()
-        self.is_over = False
-
-    def generate_(self, pair):
-        self.pair = pair
-        self.player1 = pair[0][1]
-        self.player2 = pair[1][1]
-
-    def get_result(self):
-        self.results = input("result(if player1 win write 10 but if it's player2 write 01)\n=>")
-        if self.results == '10':
-            self.player1.score_in_game += 1
-            self.player2.score_in_game += 0
-            self.is_over = True
-        elif self.results == '01':
-            self.player1.score_in_game += 0
-            self.player2.score_in_game += 1
-            self.is_over = True
-        elif self.results == '00' or self.results == '11':
-            self.player1.score_in_game += 0.5
-            self.player2.score_in_game += 0.5
-            self.is_over = True
-        else:
-            print('veuillez entré un resultat valide')
-            self.is_over = False
-
 
 def pairs_generator_for_turn_1(players_list):
+    """
+    generateur de pair se basant sur le rank des joueurs
+    :param players_list:
+    :return: pairs_list
+    """
+
+    def getRank(player):
+        return int(player.rank)
+
     ranked_players = []
     pairs_list = []
     number_of_pairs = int(len(players_list) / 2)
-
-    for player in players_list:
-        row = [int(player.rank), player]
-        ranked_players.append(row)
-        ranked_players = sorted(ranked_players)
+    ranked_players = sorted(players_list,key=getRank)
     print(ranked_players)
 
     print('nombre de pairs a genéré est de ' + str(number_of_pairs))
@@ -160,14 +127,17 @@ def pairs_generator_for_turn_1(players_list):
 
 
 def pairs_generator(players_list):
-    ordered_players_by_score = []
-    pairs_list = []
-    number_of_pairs = int(len(players_list)/2)
+    """
+    generateur de pair se basant sur le score du joueurs
+    :param players_list:
+    :return: pairs_list
+    """
 
-    for player in players_list:
-        row = [int(player.score_in_game), player]
-        ordered_players_by_score.append(row)
-        ordered_players_by_score.sort()
+    def get_score(player):
+        return int(player.score_in_game)
+    pairs_list = []
+    number_of_pairs = int(len(players_list) / 2)
+    ordered_players_by_score = sorted(players_list, key=get_score)
     print(ordered_players_by_score)
 
     print('nombre de pairs a genéré est de ' + str(number_of_pairs))

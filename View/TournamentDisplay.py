@@ -1,3 +1,6 @@
+import values as values
+
+
 def MenuTournament():
     """
     first menu for managing tournament
@@ -23,7 +26,7 @@ def NewTournament():
     info_tournament = {
         "name": input("nom du tournois: "),
         "location": input("location du tournoi: "),
-        "number_of_player": input("nombres de joueurs")
+        "number_of_player": input("nombres de joueurs: "),
         "start_day": input("jour de debut: "),
         "end_day": input("jour de fin: "),
         "month": input("mois: "),
@@ -58,15 +61,13 @@ def MenuActiveTournament(tournament):
     """
     print("bienvenu dans le menu du " + tournament.name)
     print("\tde la ville de " + tournament.location)
-    print("\tle tournois compte " + str(tournament.number_of_player) + " inscrit.")
+    print("\tle tournois compte " + str(len(tournament.players_list)) + "/" + str(tournament.number_of_player) + "inscrit")
     print()
     print("voulez vous : ")
     print("\t 1 - afficher la liste des joueurs ")
     print("\t 2 - creer un nouveau joueur ")
-    print("\t 4 - Initaliser un joueur depuis la base de donné")
-    print("\t 3 - creer le premier tour")
-
-    print("\t 5 - entrez un resultat")
+    print("\t 3 - Initaliser un joueur depuis la base de donné")
+    print("\t 4 - lancer le touroie")
     print("\t 0 - menu principal")
     response = int(input("=> "))
     return response
@@ -86,6 +87,18 @@ def ViewInfoTournament(i, tournament):
 
 def ViewInfoMatch(player1, player2, i=1):
     print('match number : #' + str(i+1))
-    print(str(player1.first_name), player1.name + '\n')
-    print('\tvs\n')
-    print(player2.first_name,player2.name + '\n')
+    print(str(player1.first_name), player1.name + ' vs ' + player2.first_name,player2.name + '\n')
+
+
+def MenuActiveTurn(tournament):
+    if tournament.turn_list.index(tournament.active_turn)==0:
+        print('bienvenu dans le premier tour\n')
+    else:
+        print('bienvenu dans le '+str(tournament.turn_list.index(tournament.active_turn)+1)+'eme tour\n')
+    print('voulez vous: ')
+    print("\t 1 - afficher la liste des match")
+    print("\t 2 - entrez un resultat")
+    print("\t 3 - generer le prochain tour ")
+    print("\t 0 - menu principal")
+    response = int(input("=> "))
+    return response
