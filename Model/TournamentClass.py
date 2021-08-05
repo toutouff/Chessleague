@@ -23,18 +23,20 @@ class Tournament:
         self.active_turn = 0
         self.number_of_player = int(self.info_tournament['number_of_player']) or 8
         for i in range(int(self.number_of_player / 2)):
-            self.turn_list.append(Turn('Turn #'+str(i), self.number_of_player))
+            self.turn_list.append(Turn('Turn #' + str(i), self.number_of_player))
         self.players_list = []
         self.players_data = []
         self.db_id = 1
-        """self.serialized_turn_list = None"""
+        self.turns_data = []
 
     def launch(self):
         self.active_turn = self.turn_list[0]
         self.active_turn.get_pairs_list(pairs_generator_for_turn_1(self.players_list))
         self.active_turn.generate_match()
+        self.update_turn_list()
 
     def nextTurn(self):
+        # set turn over
         self.active_turn = self.turn_list[self.turn_list.index(self.active_turn) + 1]
         self.active_turn.get_pairs_list(pairs_generator(self.players_list))
         self.active_turn.generate_match()
@@ -47,7 +49,6 @@ class Tournament:
         """
         self.players_list.append(temp_player)
         self.players_data.append(temp_player.data_player)
-        print(self.players_data)
 
     def Save(self):
         """
@@ -70,6 +71,12 @@ class Tournament:
         tournament_data = self.SerializeDataTournament()
         tournament_table.update({'player_list': self.players_data}, doc_ids=[self.db_id])
 
+    def update_turn_list(self):
+        self.serialize_data_turn()
+        db = TinyDB('db.json')
+        tournament_table = db.table('Tournament')
+        tournament_table.update({'turn_list': self.turns_data}, doc_ids=[self.db_id])
+
     def SerializeDataTournament(self):
         """
         serialize the data so it can be stored
@@ -84,9 +91,12 @@ class Tournament:
             'month': str(self.month),
             'year': str(self.year),
             'player_list': self.players_data,
-            'turn_list': self.serialized_turn
+            'turn_list': self.turns_data
         }
         return dict(self.data_tournament)
+
+    def serialize_data_turn(self):
+        self.turns_data.append(self.active_turn.serialize())
 
     @staticmethod
     def All():
@@ -115,7 +125,7 @@ def pairs_generator_for_turn_1(players_list):
     ranked_players = []
     pairs_list = []
     number_of_pairs = int(len(players_list) / 2)
-    ranked_players = sorted(players_list,key=getRank)
+    ranked_players = sorted(players_list, key=getRank)
     print(ranked_players)
 
     print('nombre de pairs a genéré est de ' + str(number_of_pairs))
@@ -135,6 +145,7 @@ def pairs_generator(players_list):
 
     def get_score(player):
         return int(player.score_in_game)
+
     pairs_list = []
     number_of_pairs = int(len(players_list) / 2)
     ordered_players_by_score = sorted(players_list, key=get_score)

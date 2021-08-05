@@ -1,7 +1,7 @@
 from tinydb import *
 
 from Controler import Player
-from Model import PlayerClass
+from Model import PlayerClass, TurnClass
 from Model import TournamentClass
 from View import PlayerDisplay
 from View import TournamentDisplay
@@ -26,7 +26,6 @@ def TournamentMenu():
                 PrintAllTournament(tournament_list)
             elif response == 3:
                 tournament = init_tournament()
-                # tournament = InitTournament()
                 tournament_exist = True
             elif response == 0:
                 is_open = False
@@ -51,6 +50,8 @@ def ActiveTournamentMenu(tournament):
             tournament.AddPlayer(InitPlayerByName())
             tournament.UpdatePlayersList()
         elif response == 4:
+            tournament.launch()
+        elif response == 5:
             launch_tournament(tournament)
         elif response == 0:
             is_open = False
@@ -123,7 +124,13 @@ def init_tournament():
     for player in tournament_players_list:
         player = PlayerClass.Player(player)
         tournament.AddPlayer(player)
-        print('jai le joueurs')
+    tournament_turns_data = tournament.data_tournament['turn_list']
+    for turn_data in tournament_turns_data:
+        tournament.active_turn = TurnClass.Turn(turn_data['name'], tournament.number_of_player)
+        tournament.turn_list[int(tournament.active_turn.name[6])] = tournament.active_turn
+        for i, match_data in enumerate(turn_data['match_list']):
+            match = tournament.active_turn.match_list[i]
+            match.de_serialize(match_data)
     return tournament
 
 
@@ -143,7 +150,6 @@ def end_a_match(tournament):
 
 
 def launch_tournament(tournament):
-    tournament.launch()
     is_active = True
     while is_active:
         response = TournamentDisplay.MenuActiveTurn(tournament)
