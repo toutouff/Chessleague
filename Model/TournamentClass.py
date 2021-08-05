@@ -1,4 +1,7 @@
 from tinydb import *
+from tinydb.table import Document
+
+from Model.TurnClass import Turn
 
 
 class Tournament:
@@ -8,6 +11,7 @@ class Tournament:
                 and description
         :param info_tournament:
         """
+        self.turn_list = []
         self.info_tournament = info_tournament
         self.data_tournament = info_tournament
         self.name = self.info_tournament['name']
@@ -16,11 +20,26 @@ class Tournament:
         self.end_day = self.info_tournament['end_day']
         self.month = self.info_tournament['month']
         self.year = self.info_tournament['year']
-        self.turn = 0
-        self.number_of_player = 0
+        self.active_turn = 0
+        self.number_of_player = int(self.info_tournament['number_of_player']) or 8
+        for i in range(int(self.number_of_player / 2)):
+            self.turn_list.append(Turn('Turn #' + str(i), self.number_of_player))
         self.players_list = []
         self.players_data = []
-        self.db_id = [1]
+        self.db_id = 1
+        self.turns_data = []
+
+    def launch(self):
+        self.active_turn = self.turn_list[0]
+        self.active_turn.get_pairs_list(pairs_generator_for_turn_1(self.players_list))
+        self.active_turn.generate_match()
+        self.update_turn_list()
+
+    def nextTurn(self):
+        # set turn over
+        self.active_turn = self.turn_list[self.turn_list.index(self.active_turn) + 1]
+        self.active_turn.get_pairs_list(pairs_generator(self.players_list))
+        self.active_turn.generate_match()
 
     def AddPlayer(self, temp_player):
         """
@@ -30,8 +49,6 @@ class Tournament:
         """
         self.players_list.append(temp_player)
         self.players_data.append(temp_player.data_player)
-        self.number_of_player = self.number_of_player + 1
-        self.UpdatePlayersList()
 
     def Save(self):
         """
@@ -50,7 +67,15 @@ class Tournament:
         """
         db = TinyDB('db.json')
         tournament_table = db.table('Tournament')
-        tournament_table.update(fields=self.SerializeDataTournament(), doc_ids=self.db_id)
+        print('le joueurs a ete ajouter a la db ', self.db_id)
+        tournament_data = self.SerializeDataTournament()
+        tournament_table.update({'player_list': self.players_data}, doc_ids=[self.db_id])
+
+    def update_turn_list(self):
+        self.serialize_data_turn()
+        db = TinyDB('db.json')
+        tournament_table = db.table('Tournament')
+        tournament_table.update({'turn_list': self.turns_data}, doc_ids=[self.db_id])
 
     def SerializeDataTournament(self):
         """
@@ -60,13 +85,18 @@ class Tournament:
         self.data_tournament = {
             'name': self.name,
             'location': self.location,
+            'number_of_player': self.number_of_player,
             'start_day': str(self.start_day),
             'end_day': str(self.end_day),
             'month': str(self.month),
             'year': str(self.year),
-            'player_list': self.players_data
+            'player_list': self.players_data,
+            'turn_list': self.turns_data
         }
-        return self.data_tournament
+        return dict(self.data_tournament)
+
+    def serialize_data_turn(self):
+        self.turns_data.append(self.active_turn.serialize())
 
     @staticmethod
     def All():
@@ -80,3 +110,50 @@ class Tournament:
         for tournament in tournament_table:
             tournament_list.append(Tournament(tournament))
         return tournament_list
+
+
+def pairs_generator_for_turn_1(players_list):
+    """
+    generateur de pair se basant sur le rank des joueurs
+    :param players_list:
+    :return: pairs_list
+    """
+
+    def getRank(player):
+        return int(player.rank)
+
+    ranked_players = []
+    pairs_list = []
+    number_of_pairs = int(len(players_list) / 2)
+    ranked_players = sorted(players_list, key=getRank)
+    print(ranked_players)
+
+    print('nombre de pairs a genéré est de ' + str(number_of_pairs))
+
+    for i in range(number_of_pairs):
+        pairs = [ranked_players[i], ranked_players[i + number_of_pairs]]
+        pairs_list.append(pairs)
+    return pairs_list
+
+
+def pairs_generator(players_list):
+    """
+    generateur de pair se basant sur le score du joueurs
+    :param players_list:
+    :return: pairs_list
+    """
+
+    def get_score(player):
+        return int(player.score_in_game)
+
+    pairs_list = []
+    number_of_pairs = int(len(players_list) / 2)
+    ordered_players_by_score = sorted(players_list, key=get_score)
+    print(ordered_players_by_score)
+
+    print('nombre de pairs a genéré est de ' + str(number_of_pairs))
+
+    for i in range(number_of_pairs):
+        pair = [ordered_players_by_score[i], ordered_players_by_score[i + number_of_pairs]]
+        pairs_list.append(pair)
+    return pairs_list

@@ -5,12 +5,13 @@ class Player:
     def __init__(self, info_player):
         """
         store : name,first,birthdate,rank
-        :param info_player: dcit containing all necessary info from player
+        :param info_player: dict containing all necessary info from player
         """
         self.data_player = info_player
         self.name = self.data_player['nom']
         self.first_name = self.data_player['prenom']
         self.rank = self.data_player['rank']
+        self.score_in_game = 0
 
     def Save(self):
         """
