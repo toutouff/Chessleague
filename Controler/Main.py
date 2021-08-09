@@ -1,5 +1,6 @@
 from Controler import Player
 from Controler import Tournament
+from Controler import Rapport
 from View import MainDisplay
 
 
@@ -16,6 +17,8 @@ def MainMenu():
             Player.PlayerMenu()
         elif response == 2:
             Tournament.TournamentMenu()
+        elif response == 3:
+            Rapport.RapportMenu()
         elif response == 0:
             print("vous avez quitter")
             is_open = False

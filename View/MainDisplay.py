@@ -7,6 +7,7 @@ def Menu_Principal():
     print("voulez-vous :")
     print("\t 1 - menu des joueurs ")
     print("\t 2 - menu des championat")
+    print("\t 3 - menu des Rapport")
     print("\t 0 - quitter")
     response = int(input("=> "))
     return response

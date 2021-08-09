@@ -27,7 +27,7 @@ class Tournament:
         self.players_list = []
         self.players_data = []
         self.db_id = 1
-        self.turns_data = []
+        self.turns_data = self.info_tournament['turn_list']
 
     def launch(self):
         self.active_turn = self.turn_list[0]

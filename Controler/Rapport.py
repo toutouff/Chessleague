@@ -1,13 +1,6 @@
-from string import Template
-
-from Model import PlayerClass, TournamentClass
-
-from Model.PlayerClass import Player
-
-
-
-
-
+from tinydb import TinyDB
+from Controler.Tournament import init_tournament
+from View.RapportDisplay import *
 
 
 def RapportMenu():
@@ -31,8 +24,6 @@ def RapportMenu():
             RapportTournamentMenu(tournament)
 
 
-
-
 def RapportTournamentMenu(tournament):
     """
     controller
@@ -50,8 +41,3 @@ def RapportTournamentMenu(tournament):
             AllMatchRapport(tournament.data_tournament['turn_list'])
         elif response == 0:
             is_open = False
-
-
-
-
-RapportMenu()
