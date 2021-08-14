@@ -27,16 +27,15 @@ class Tournament:
         self.players_list = []
         self.players_data = []
         self.db_id = 1
-        self.turns_data = self.info_tournament['turn_list']
+        self.turns_data = []
 
     def launch(self):
         self.active_turn = self.turn_list[0]
         self.active_turn.get_pairs_list(pairs_generator_for_turn_1(self.players_list))
         self.active_turn.generate_match()
-        self.update_turn_list()
 
     def nextTurn(self):
-        # set turn over
+        self.active_turn.is_over = True
         self.active_turn = self.turn_list[self.turn_list.index(self.active_turn) + 1]
         self.active_turn.get_pairs_list(pairs_generator(self.players_list))
         self.active_turn.generate_match()
@@ -68,7 +67,6 @@ class Tournament:
         db = TinyDB('db.json')
         tournament_table = db.table('Tournament')
         print('le joueurs a ete ajouter a la db ', self.db_id)
-        tournament_data = self.SerializeDataTournament()
         tournament_table.update({'player_list': self.players_data}, doc_ids=[self.db_id])
 
     def update_turn_list(self):
@@ -96,7 +94,10 @@ class Tournament:
         return dict(self.data_tournament)
 
     def serialize_data_turn(self):
-        self.turns_data.append(self.active_turn.serialize())
+        self.turns_data = []
+        for turn in self.turn_list:
+            self.turns_data.append(turn.serialize())
+            return self.turns_data
 
     @staticmethod
     def All():

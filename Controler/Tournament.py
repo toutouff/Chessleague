@@ -137,16 +137,18 @@ def init_tournament():
 def end_a_match(tournament):
     turn = tournament.active_turn
     for i in range(len(turn.match_list)):
-        print(i, turn.match_list[i])
-        TournamentDisplay.ViewInfoMatch(turn.match_list[i].player1, turn.match_list[i].player2, i)
+        if not turn.match_list[i].is_over:
+            TournamentDisplay.ViewInfoMatch(turn.match_list[i].player1, turn.match_list[i].player2, i)
+
     response = input('quelle match est fini ?\n=> ')
-    match = turn.match_list[int(response) - 1]
+    match = turn.match_list[int(response)]
     if not match.is_over:
         match.get_result()
     else:
         print('un score est deja enregitré pour ce match')
     print(match.player1.score_in_game)
     print(match.player2.score_in_game)
+    tournament.update_turn_list()
 
 
 def launch_tournament(tournament):
@@ -158,7 +160,18 @@ def launch_tournament(tournament):
                 TournamentDisplay.ViewInfoMatch(match.player1, match.player2, i)
         if response == 2:
             end_a_match(tournament)
+            update_turn_list(tournament)
         if response == 3:
             tournament.nextTurn()
+            update_turn_list(tournament)
         if response == 0:
             is_active = False
+
+
+def update_turn_list(tournament):
+    tournament.turns_data = []
+    for turn in tournament.turn_list:
+        tournament.turns_data.append(turn.serialize())
+    db = TinyDB('db.json')
+    tournament_table = db.table('Tournament')
+    tournament_table.update({'turn_list': tournament.turns_data}, doc_ids=[tournament.db_id])

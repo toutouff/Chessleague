@@ -23,13 +23,14 @@ class Turn:
             print(self.match_list[i].player1)
 
     def serialize(self):
-        for match in self.match_list:
-            self.match_data.append(match.serialize())
+        match_data = []
         self.data_turn = {
-            'name': self.name,
-            'is_over': str(self.is_over),
-            'match_list': self.match_data
+            'name':self.name,
+            'is_over': self.is_over,
         }
+        for match in self.match_list:
+            match_data.append(match.serialize())
+        self.data_turn['match_list'] = match_data
         return self.data_turn
 
     def deserialize(self, turn_data):

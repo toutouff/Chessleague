@@ -39,6 +39,7 @@ class Match:
             self.data = {
                 'player1': self.player1.data_player,
                 'player2': self.player2.data_player,
+                'is_over': self.is_over,
                 'results': self.results
             }
             return self.data
@@ -53,8 +54,9 @@ class Match:
     def de_serialize(self, match_data):
         self.player1 = Player(match_data['player1'])
         self.player2 = Player(match_data['player2'])
-        if match_data['is_over'] == 'False':
+        if not match_data['is_over']:
             self.is_over = False
-        elif match_data['is_over'] == 'True':
+        elif match_data['is_over']:
             self.is_over = True
+            self.results = match_data['results']
 
