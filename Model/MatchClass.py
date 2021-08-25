@@ -8,6 +8,7 @@ class Match:
         self.player2 = []
         self.results = ()
         self.is_over = False
+
         self.data = {}
 
     def generate(self, pair):
@@ -16,7 +17,8 @@ class Match:
 
     def get_result(self):
         print(self.is_over)
-        self.results = input("result(if player1 win write 10,if it's player2 write 01,if it's a draw write 00 or 11)\n=>")
+        self.results = input(
+            "result(if player1 win write 10,if it's player2 write 01,if it's a draw write 00 or 11)\n=>")
         # creer un display et s'assurer du bon placement de cette fonction(condition dans le controlleur)
         if self.results == '10':
             self.player1.score_in_game += 1
@@ -59,4 +61,3 @@ class Match:
         elif match_data['is_over']:
             self.is_over = True
             self.results = match_data['results']
-

@@ -2,7 +2,7 @@ from tinydb import *
 from tinydb.table import Document
 
 from Model.TurnClass import Turn
-
+# TODO:ajouter controle du temps
 
 class Tournament:
     def __init__(self, info_tournament):
@@ -25,20 +25,22 @@ class Tournament:
         for i in range(int(self.number_of_player / 2)):
             self.turn_list.append(Turn('Turn #' + str(i), self.number_of_player))
         self.players_list = []
-        self.players_data = []
+        self.players_data = info_tournament['player_list']
         self.db_id = 1
-        self.turns_data = []
+        self.turns_data = info_tournament['turn_list']
 
     def launch(self):
         self.active_turn = self.turn_list[0]
         self.active_turn.get_pairs_list(pairs_generator_for_turn_1(self.players_list))
         self.active_turn.generate_match()
+        self.active_turn.is_exist = True
 
     def nextTurn(self):
         self.active_turn.is_over = True
         self.active_turn = self.turn_list[self.turn_list.index(self.active_turn) + 1]
         self.active_turn.get_pairs_list(pairs_generator(self.players_list))
         self.active_turn.generate_match()
+        self.active_turn.is_exist = True
 
     def AddPlayer(self, temp_player):
         """
@@ -97,7 +99,7 @@ class Tournament:
         self.turns_data = []
         for turn in self.turn_list:
             self.turns_data.append(turn.serialize())
-            return self.turns_data
+        return self.turns_data
 
     @staticmethod
     def All():

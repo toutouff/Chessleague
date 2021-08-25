@@ -52,7 +52,9 @@ def ActiveTournamentMenu(tournament):
         elif response == 4:
             tournament.launch()
         elif response == 5:
-            launch_tournament(tournament)
+            if not tournament.active_turn == 0:
+                launch_tournament(tournament)
+                update_turn_list(tournament)
         elif response == 0:
             is_open = False
             return False
@@ -119,18 +121,37 @@ def init_tournament():
     print('veuillez indiquer le numero du tournoi : ')
     result_id = int(input('=>'))
     tournament_data = tournament_table.get(doc_id=result_id)
-    tournament = TournamentClass.Tournament(dict(tournament_data))
-    tournament_players_list = tournament.data_tournament['player_list']
-    for player in tournament_players_list:
-        player = PlayerClass.Player(player)
-        tournament.AddPlayer(player)
-    tournament_turns_data = tournament.data_tournament['turn_list']
-    for turn_data in tournament_turns_data:
-        tournament.active_turn = TurnClass.Turn(turn_data['name'], tournament.number_of_player)
-        tournament.turn_list[int(tournament.active_turn.name[6])] = tournament.active_turn
-        for i, match_data in enumerate(turn_data['match_list']):
-            match = tournament.active_turn.match_list[i]
-            match.de_serialize(match_data)
+    tournament = TournamentClass.Tournament(tournament_data)
+
+    tournament.players_list = []  # reset de la list de joueurs
+    for player_data in tournament_data['player_list']:
+        tournament.players_list.append(PlayerClass.Player(
+            player_data))  # ajout des joueurs a partir du dict players_list contenu dans tournament_data
+
+    for y, turn_data in enumerate(tournament_data['turn_list']):  # deserialisation des tours
+        tournament.turn_list[y].deserialize(turn_data)
+
+    for i, turn in enumerate(tournament.turn_list):
+        if turn.is_exist:
+            for y, match in enumerate(turn.match_list):
+                player_id_1 = tournament.data_tournament['player_list'].index(tournament.data_tournament['turn_list'][i]
+                                                                              ['match_list'][y]['player1'])
+                player_id_2 = tournament.data_tournament['player_list'].index(tournament.data_tournament['turn_list'][i]
+                                                                              ['match_list'][y]['player2'])
+                match.player1 = tournament.players_list[player_id_1]
+                match.player2 = tournament.players_list[player_id_2]
+                if match.is_over:
+                    if match.results == '10':
+                        match.player1.score_in_game += 1
+                        match.player2.score_in_game += 0
+                    elif match.results == '01':
+                        match.player1.score_in_game += 0
+                        match.player2.score_in_game += 1
+                    elif match.results == '00' or match.results == '11':
+                        match.player1.score_in_game += 0.5
+                        match.player2.score_in_game += 0.5
+            tournament.active_turn = turn
+
     return tournament
 
 
@@ -148,7 +169,6 @@ def end_a_match(tournament):
         print('un score est deja enregitré pour ce match')
     print(match.player1.score_in_game)
     print(match.player2.score_in_game)
-    tournament.update_turn_list()
 
 
 def launch_tournament(tournament):
@@ -171,7 +191,8 @@ def launch_tournament(tournament):
 def update_turn_list(tournament):
     tournament.turns_data = []
     for turn in tournament.turn_list:
-        tournament.turns_data.append(turn.serialize())
+        if turn.is_exist:
+            tournament.turns_data.append(turn.serialize())
     db = TinyDB('db.json')
     tournament_table = db.table('Tournament')
     tournament_table.update({'turn_list': tournament.turns_data}, doc_ids=[tournament.db_id])

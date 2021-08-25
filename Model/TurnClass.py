@@ -6,6 +6,7 @@ class Turn:
         self.name = name
         self.pairs_list = []
         self.is_over = False
+        self.is_exist = False
         self.match_list = []
         self.match_data = []
         self.data_turn = {}
@@ -27,6 +28,7 @@ class Turn:
         self.data_turn = {
             'name':self.name,
             'is_over': self.is_over,
+            'is_exist': self.is_exist
         }
         for match in self.match_list:
             match_data.append(match.serialize())
@@ -36,6 +38,7 @@ class Turn:
     def deserialize(self, turn_data):
         self.name = turn_data['name']
         self.is_over = bool(turn_data['is_over'])
+        self.is_exist = bool(turn_data['is_exist'])
         for y, match_data in enumerate(turn_data['match_list']):
             match = self.match_list[y]
             match.de_serialize(match_data)
