@@ -1,8 +1,9 @@
 from tinydb import *
 from tinydb.table import Document
-
+from datetime import datetime
 from Model.TurnClass import Turn
 # TODO:ajouter controle du temps
+
 
 class Tournament:
     def __init__(self, info_tournament):
@@ -25,22 +26,27 @@ class Tournament:
         for i in range(int(self.number_of_player / 2)):
             self.turn_list.append(Turn('Turn #' + str(i), self.number_of_player))
         self.players_list = []
-        self.players_data = info_tournament['player_list']
+        self.players_data = []
         self.db_id = 1
-        self.turns_data = info_tournament['turn_list']
+        self.turns_data = []
 
     def launch(self):
         self.active_turn = self.turn_list[0]
         self.active_turn.get_pairs_list(pairs_generator_for_turn_1(self.players_list))
         self.active_turn.generate_match()
         self.active_turn.is_exist = True
+        self.active_turn.start_date = datetime.now()
 
     def nextTurn(self):
-        self.active_turn.is_over = True
-        self.active_turn = self.turn_list[self.turn_list.index(self.active_turn) + 1]
-        self.active_turn.get_pairs_list(pairs_generator(self.players_list))
-        self.active_turn.generate_match()
-        self.active_turn.is_exist = True
+        self.active_turn.end_date = datetime.now()
+        if self.turn_list.index(self.active_turn) == int(len(self.turn_list)-1):
+            print("le tournoie est fini")
+        else:
+            self.active_turn = self.turn_list[self.turn_list.index(self.active_turn) + 1]
+            self.active_turn.get_pairs_list(pairs_generator(self.players_list))
+            self.active_turn.generate_match()
+            self.active_turn.is_exist = True
+            self.active_turn.start_date = datetime.now()
 
     def AddPlayer(self, temp_player):
         """
@@ -98,7 +104,9 @@ class Tournament:
     def serialize_data_turn(self):
         self.turns_data = []
         for turn in self.turn_list:
-            self.turns_data.append(turn.serialize())
+            if turn.is_exist:
+                turn_data = turn.serialize()
+                self.turns_data.append(turn_data)
         return self.turns_data
 
     @staticmethod
@@ -129,7 +137,6 @@ def pairs_generator_for_turn_1(players_list):
     pairs_list = []
     number_of_pairs = int(len(players_list) / 2)
     ranked_players = sorted(players_list, key=getRank)
-    print(ranked_players)
 
     print('nombre de pairs a genéré est de ' + str(number_of_pairs))
 
@@ -152,8 +159,6 @@ def pairs_generator(players_list):
     pairs_list = []
     number_of_pairs = int(len(players_list) / 2)
     ordered_players_by_score = sorted(players_list, key=get_score)
-    print(ordered_players_by_score)
-
     print('nombre de pairs a genéré est de ' + str(number_of_pairs))
 
     for i in range(number_of_pairs):

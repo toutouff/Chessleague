@@ -11,8 +11,8 @@ def MenuTournament():
     print("\t 1 - creer un nouveau tournois")
     print("\t 2 - afficher tout les tournois ")  # this line bealong to the rapport menu
     print("\t 3 - initialiser un tournoi")  # does it's still work well ?
-    print("\t 0 - menu principal")
-    response = int(input("=> "))
+    print('\t 0 - retour')
+    response = input("=> ")
     return response
 
 
@@ -48,7 +48,7 @@ def MenuTournamentInitialized(tournament):
     print("voulez-vous : ")
     print("\t 1 - creer un nouveau tournois")
     print("\t 2 - acceder au tournoi initialisé")
-    print("\t 0 - menu principal")
+    print('\t 0 - retour')
     response = int(input("=> "))
     return response
 
@@ -70,8 +70,8 @@ def MenuActiveTournament(tournament):
     print("\t 3 - Initaliser un joueur depuis la base de donné")
     print("\t 4 - generer le premier tour")
     print("\t 5 - lancer le tournoi")
-    print("\t 0 - menu principal")
-    response = int(input("=> "))
+    print('\t 0 - retour')
+    response = input("=> ")
     return response
 
 
@@ -88,8 +88,8 @@ def ViewInfoTournament(i, tournament):
     print('location : ' + tournament.location + '\n')
 
 
-def ViewInfoMatch(player1, player2, i=1):
-    print(f'match #{i}:\t {player1.name} / {player2.name}')
+def ViewInfoMatch(match, i=1):
+    print(f'match #{i}:\t {match.player1.name}({match.player1.score_in_game}) / {match.player2.name}({match.player2.score_in_game})')
 
 
 def MenuActiveTurn(tournament):
@@ -101,6 +101,10 @@ def MenuActiveTurn(tournament):
     print("\t 1 - afficher la liste des match")
     print("\t 2 - entrez un resultat")
     print("\t 3 - generer le prochain tour ")
-    print("\t 0 - menu principal")
+    print('\t 0 - retour')
     response = int(input("=> "))
     return response
+
+
+def TournamentIsFull(tournament):
+    print("le nombre defini de " + str(tournament.number_of_player) + " joueur est atteint\n")

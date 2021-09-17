@@ -17,17 +17,17 @@ def TournamentMenu():
             tournament_exist = ActiveTournamentMenu(tournament)
         else:
             response = TournamentDisplay.MenuTournament()
-            if response == 1:
+            if response == str(1):
                 tournament = NewTournament()
                 tournament.Save()
                 tournament_exist = True
-            elif response == 2:
+            elif response == str(2):
                 tournament_list = TournamentClass.Tournament.All()
                 PrintAllTournament(tournament_list)
-            elif response == 3:
+            elif response == str(3):
                 tournament = init_tournament()
                 tournament_exist = True
-            elif response == 0:
+            elif response == str(0):
                 is_open = False
 
 
@@ -41,21 +41,31 @@ def ActiveTournamentMenu(tournament):
     is_open = True
     while is_open:
         response = TournamentDisplay.MenuActiveTournament(tournament)
-        if response == 1:
+        if response == str(1):
             Player.PrintAllPlayer(tournament.players_list)
-        elif response == 2:
-            temp_player = NewPlayer()
-            tournament.AddPlayer(temp_player)
-        elif response == 3:
-            tournament.AddPlayer(InitPlayerByName())
-            tournament.UpdatePlayersList()
-        elif response == 4:
+        elif response == str(2):
+            if not tournament.number_of_player == len(tournament.players_list):
+                temp_player = NewPlayer()
+                tournament.AddPlayer(temp_player)
+            else:
+                TournamentDisplay.TournamentIsFull(tournament)
+        elif response == str(3):
+            if not tournament.number_of_player == len(tournament.players_list):
+                tournament.AddPlayer(InitPlayerByName())
+                tournament.UpdatePlayersList()
+            else:
+                TournamentDisplay.TournamentIsFull(tournament)
+        elif response == str(4):
             tournament.launch()
-        elif response == 5:
-            if not tournament.active_turn == 0:
+        elif response == str(5):
+            if tournament.active_turn == 0:
+                tournament.launch()
                 launch_tournament(tournament)
                 update_turn_list(tournament)
-        elif response == 0:
+            else:
+                launch_tournament(tournament)
+                update_turn_list(tournament)
+        elif response == str(0):
             is_open = False
             return False
 
@@ -122,7 +132,7 @@ def init_tournament():
     result_id = int(input('=>'))
     tournament_data = tournament_table.get(doc_id=result_id)
     tournament = TournamentClass.Tournament(tournament_data)
-
+    tournament.db_id = result_id
     tournament.players_list = []  # reset de la list de joueurs
     for player_data in tournament_data['player_list']:
         tournament.players_list.append(PlayerClass.Player(
@@ -157,18 +167,23 @@ def init_tournament():
 
 def end_a_match(tournament):
     turn = tournament.active_turn
+    match_over = 0
     for i in range(len(turn.match_list)):
         if not turn.match_list[i].is_over:
-            TournamentDisplay.ViewInfoMatch(turn.match_list[i].player1, turn.match_list[i].player2, i)
-
-    response = input('quelle match est fini ?\n=> ')
-    match = turn.match_list[int(response)]
-    if not match.is_over:
-        match.get_result()
+            TournamentDisplay.ViewInfoMatch(turn.match_list[i], i + 1)
+        elif turn.match_list[i].is_over:
+            match_over = match_over + 1
+    if len(turn.match_list) == match_over:
+        print('le tour est fini')
     else:
-        print('un score est deja enregitré pour ce match')
-    print(match.player1.score_in_game)
-    print(match.player2.score_in_game)
+        response = input('quelle match est fini ?\n=> ')
+        match = turn.match_list[int(response) - 1]
+        if not match.is_over:
+            match.get_result()
+        else:
+            print('un score est deja enregitré pour ce match')
+        print(match.player1.score_in_game)
+        print(match.player2.score_in_game)
 
 
 def launch_tournament(tournament):
@@ -177,13 +192,17 @@ def launch_tournament(tournament):
         response = TournamentDisplay.MenuActiveTurn(tournament)
         if response == 1:
             for i, match in enumerate(tournament.active_turn.match_list):
-                TournamentDisplay.ViewInfoMatch(match.player1, match.player2, i)
+                TournamentDisplay.ViewInfoMatch(match, i + 1)
         if response == 2:
             end_a_match(tournament)
             update_turn_list(tournament)
         if response == 3:
-            tournament.nextTurn()
-            update_turn_list(tournament)
+            if OverTester(tournament.active_turn.match_list):
+                tournament.active_turn.is_over = True
+                tournament.nextTurn()
+                update_turn_list(tournament)
+            else:
+                print("tout les match ne sont pas fini")
         if response == 0:
             is_active = False
 
@@ -196,3 +215,17 @@ def update_turn_list(tournament):
     db = TinyDB('db.json')
     tournament_table = db.table('Tournament')
     tournament_table.update({'turn_list': tournament.turns_data}, doc_ids=[tournament.db_id])
+
+
+def OverTester(match_list):
+    """
+    test if all the match/turn of a list a ended or not
+    :param match_list: series of match class or turn class
+    :return: TRUE id
+    """
+    number_of_end_match = 0
+    for match in match_list:
+        if match.is_over:
+            number_of_end_match = number_of_end_match + 1
+    if number_of_end_match == len(match_list):
+        return True

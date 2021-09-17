@@ -22,6 +22,8 @@ def RapportMenu():
         elif response == 3:
             tournament = init_tournament()
             RapportTournamentMenu(tournament)
+        elif response == 0:
+            is_open = False
 
 
 def RapportTournamentMenu(tournament):
@@ -34,10 +36,10 @@ def RapportTournamentMenu(tournament):
     while is_open:
         response = RapportTournamentMenuDisplay()
         if response == 1:
-            AllPlayerRapport(tournament.players_data)
+            AllPlayerRapport(tournament.data_tournament['player_list'])
         elif response == 2:
             AllTurnRapport(tournament.data_tournament['turn_list'])
         elif response == 3:
-            AllMatchRapport(tournament.data_tournament['turn_list'])
+            AllMatchRapport(tournament)
         elif response == 0:
             is_open = False

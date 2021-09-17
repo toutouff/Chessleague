@@ -13,12 +13,12 @@ def MainMenu():
     is_open = True
     while is_open:
         response = MainDisplay.Menu_Principal()
-        if response == 1:
+        if response == str(1):
             Player.PlayerMenu()
-        elif response == 2:
+        elif response == str(2):
             Tournament.TournamentMenu()
-        elif response == 3:
+        elif response == str(3):
             Rapport.RapportMenu()
-        elif response == 0:
+        elif response == str(0):
             print("vous avez quitter")
             is_open = False

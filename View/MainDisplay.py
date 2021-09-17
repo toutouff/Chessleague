@@ -9,5 +9,5 @@ def Menu_Principal():
     print("\t 2 - menu des championat")
     print("\t 3 - menu des Rapport")
     print("\t 0 - quitter")
-    response = int(input("=> "))
+    response = input("=> ")
     return response

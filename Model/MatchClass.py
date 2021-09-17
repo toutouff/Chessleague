@@ -12,6 +12,7 @@ class Match:
         self.data = {}
 
     def generate(self, pair):
+        self.pair = pair
         self.player1 = pair[0]
         self.player2 = pair[1]
 
