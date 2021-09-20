@@ -2,7 +2,6 @@ from tinydb import *
 from tinydb.table import Document
 from datetime import datetime
 from Model.TurnClass import Turn
-# TODO:ajouter controle du temps
 
 
 class Tournament:
@@ -12,6 +11,8 @@ class Tournament:
                 and description
         :param info_tournament:
         """
+        self.description = info_tournament['description']
+        self.time_mode = info_tournament['time_mode']
         self.turn_list = []
         self.info_tournament = info_tournament
         self.data_tournament = info_tournament
@@ -39,7 +40,7 @@ class Tournament:
 
     def nextTurn(self):
         self.active_turn.end_date = datetime.now()
-        if self.turn_list.index(self.active_turn) == int(len(self.turn_list)-1):
+        if self.turn_list.index(self.active_turn) == int(len(self.turn_list) - 1):
             print("le tournoie est fini")
         else:
             self.active_turn = self.turn_list[self.turn_list.index(self.active_turn) + 1]
@@ -97,7 +98,9 @@ class Tournament:
             'month': str(self.month),
             'year': str(self.year),
             'player_list': self.players_data,
-            'turn_list': self.turns_data
+            'turn_list': self.turns_data,
+            'time_mode': self.time_mode,
+            'description': self.description
         }
         return dict(self.data_tournament)
 

@@ -11,9 +11,10 @@ def RapportMenuDisplay():
     """
     print('bienvenue dans le menu des rapport')
     print('voulez-vous :')
-    print("\t 1 - faire un rapport de tous les tournoi")
-    print("\t 2 - faire un rapport de tous les joueurs")
-    print('\t 3 - faire un rapport sur un tournoi')
+    print("\t 1 - faire un rapport de tout les tournoi")
+    print("\t 2 - faire un rapport de tout les joueurs par ordre alphabetique")
+    print("\t 3 - faire un rapport de tout les joueurs par rangs")
+    print('\t 4 - faire un rapport sur un tournoi')
     print('\t 0 - retour')
     response = int(input("=> "))
     return response
@@ -26,9 +27,10 @@ def RapportTournamentMenuDisplay():
     """
     print('bienvenue dans le menu des rapport de tournoi')
     print('voulez-vous :')
-    print("\t 1 - faire un rapport de tout les joueurs")
-    print('\t 2 - faire un rapport de tout les tours')
-    print('\t 3 - faire un rapport de tout les match')
+    print("\t 1 - faire un rapport de tout les joueurs par ordre alphabetique")
+    print('\t 2 - faire un rapport de tout les joueurs par rangs')
+    print('\t 3 - faire un rapport de tout les tours')
+    print('\t 4 - faire un rapport de tout les match')
     print('\t 0 - retour')
     response = int(input("=> "))
     return response
@@ -36,7 +38,7 @@ def RapportTournamentMenuDisplay():
 
 def AllTurnRapport(turn_data):
     """
-    display
+     display
     :param turn_data:
     :return:
     """
@@ -70,14 +72,21 @@ def AllTournamentRapport(tournament_list=None):
     :return:
     """
     tournament_data_frame = pd.DataFrame.from_dict(tournament_list)
-    print(tournament_data_frame[['name','location','number_of_player','start_day','end_day','month','year']], "\n")
+    print(tournament_data_frame[['name', 'location', 'number_of_player', 'start_day', 'end_day', 'month', 'year',
+                                 'description', 'time_mode']], "\n")
 
 
-def AllPlayerRapport(players_list=None):
+def AllPlayerRapport(players_list=None, order=0):
     """
     display
+    :param order:
     :param players_list:
     :return:
     """
     players_data_frame = pd.DataFrame.from_dict(players_list)
-    print(players_data_frame,'\n')
+    if order == 1:
+        print(players_data_frame.sort_values(by='nom'), '\n')
+    elif order == 2:
+        print(players_data_frame.sort_values(by='rank'), '\n')
+    elif order == 0:
+        print(players_data_frame, '\n')

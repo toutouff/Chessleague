@@ -24,7 +24,7 @@ def newPlayer():
         "prenom": input("prenom :"),
         "date de naiscance": input("année de naiscance :"),
         "genre": input("genre :"),
-        "rank": input("classement :")
+        "rank": int(input("classement :"))
     }
     return info_player
 

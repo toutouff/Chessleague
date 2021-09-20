@@ -30,7 +30,9 @@ def NewTournament():
         "start_day": input("jour de debut: "),
         "end_day": input("jour de fin: "),
         "month": input("mois: "),
-        "year": input("année: ")
+        "year": input("année: "),
+        "time_mode": input("mode de jeux(un bullet, un blitz ou un coup rapide): "),
+        "description": input("description: ")
     }
     return info_tournament
 

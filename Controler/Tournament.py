@@ -103,7 +103,19 @@ def InitPlayerByName():
         PlayerDisplay.ViewInfoPlayer(str(player.name), str(player.first_name), i)
         i += 1
     print('veuillez indiquer le numero du joueur : ')
-    result_id = int(input('=>'))
+    result_id = int
+    valid_input = True
+    while valid_input:
+        try:
+            result_id = input('=>')
+            if players_table.get(doc_id=int(result_id)) is not None:
+                valid_input = False
+                result_id = int(result_id)
+            else:
+                print('le nombre indiquer ne mene a rien')
+                valid_input = True
+        except ValueError:
+            print("merci d'entré un nombre")
     player_data = players_table.get(doc_id=result_id)
     player = PlayerClass.Player(dict(player_data))
     return player
@@ -129,7 +141,19 @@ def init_tournament():
         tournament = TournamentClass.Tournament(tournament_data)
         TournamentDisplay.ViewInfoTournament(i + 1, tournament)  #
     print('veuillez indiquer le numero du tournoi : ')
-    result_id = int(input('=>'))
+    result_id = int
+    valid_input = True
+    while valid_input:
+        try:
+            result_id = input('=>')
+            if tournament_table.get(doc_id=int(result_id)) is not None:
+                valid_input = False
+                result_id = int(result_id)
+            else:
+                print('le nombre indiquer ne mene a rien')
+                valid_input = True
+        except ValueError:
+            print("merci d'entré un nombre")
     tournament_data = tournament_table.get(doc_id=result_id)
     tournament = TournamentClass.Tournament(tournament_data)
     tournament.db_id = result_id
