@@ -95,24 +95,24 @@ def NewPlayer():
 def InitPlayerByName():
     """i have to"""
     i = 1
-    db = TinyDB('db.json')
-    players_table = db.table('players')
+    db = TinyDB("db.json")
+    players_table = db.table("players")
     players_list = players_table.all()
     for player in players_list:
         player = PlayerClass.Player(player)
         PlayerDisplay.ViewInfoPlayer(str(player.name), str(player.first_name), i)
         i += 1
-    print('veuillez indiquer le numero du joueur : ')
+    print("veuillez indiquer le numero du joueur : ")
     result_id = int
     valid_input = True
     while valid_input:
         try:
-            result_id = input('=>')
+            result_id = input("=>")
             if players_table.get(doc_id=int(result_id)) is not None:
                 valid_input = False
                 result_id = int(result_id)
             else:
-                print('le nombre indiquer ne mene a rien')
+                print("le nombre indiquer ne mene a rien")
                 valid_input = True
         except ValueError:
             print("merci d'entré un nombre")
@@ -134,23 +134,23 @@ def PrintAllTournament(tournament_list):
 
 
 def init_tournament():
-    db = TinyDB('db.json')
-    tournament_table = db.table('Tournament')
+    db = TinyDB("db.json")
+    tournament_table = db.table("Tournament")
     tournament_list = tournament_table.all()
     for i, tournament_data in enumerate(tournament_list):  #
         tournament = TournamentClass.Tournament(tournament_data)
         TournamentDisplay.ViewInfoTournament(i + 1, tournament)  #
-    print('veuillez indiquer le numero du tournoi : ')
+    print("veuillez indiquer le numero du tournoi : ")
     result_id = int
     valid_input = True
     while valid_input:
         try:
-            result_id = input('=>')
+            result_id = input("=>")
             if tournament_table.get(doc_id=int(result_id)) is not None:
                 valid_input = False
                 result_id = int(result_id)
             else:
-                print('le nombre indiquer ne mene a rien')
+                print("le nombre indiquer ne mene a rien")
                 valid_input = True
         except ValueError:
             print("merci d'entré un nombre")
@@ -158,30 +158,39 @@ def init_tournament():
     tournament = TournamentClass.Tournament(tournament_data)
     tournament.db_id = result_id
     tournament.players_list = []  # reset de la list de joueurs
-    for player_data in tournament_data['player_list']:
-        tournament.players_list.append(PlayerClass.Player(
-            player_data))  # ajout des joueurs a partir du dict players_list contenu dans tournament_data
+    for player_data in tournament_data["player_list"]:
+        tournament.players_list.append(
+            PlayerClass.Player(player_data)
+        )  # ajout des joueurs a partir du dict players_list contenu dans tournament_data
 
-    for y, turn_data in enumerate(tournament_data['turn_list']):  # deserialisation des tours
+    for y, turn_data in enumerate(
+        tournament_data["turn_list"]
+    ):  # deserialisation des tours
         tournament.turn_list[y].deserialize(turn_data)
 
     for i, turn in enumerate(tournament.turn_list):
         if turn.is_exist:
             for y, match in enumerate(turn.match_list):
-                player_id_1 = tournament.data_tournament['player_list'].index(tournament.data_tournament['turn_list'][i]
-                                                                              ['match_list'][y]['player1'])
-                player_id_2 = tournament.data_tournament['player_list'].index(tournament.data_tournament['turn_list'][i]
-                                                                              ['match_list'][y]['player2'])
+                player_id_1 = tournament.data_tournament["player_list"].index(
+                    tournament.data_tournament["turn_list"][i]["match_list"][y][
+                        "player1"
+                    ]
+                )
+                player_id_2 = tournament.data_tournament["player_list"].index(
+                    tournament.data_tournament["turn_list"][i]["match_list"][y][
+                        "player2"
+                    ]
+                )
                 match.player1 = tournament.players_list[player_id_1]
                 match.player2 = tournament.players_list[player_id_2]
                 if match.is_over:
-                    if match.results == '10':
+                    if match.results == "10":
                         match.player1.score_in_game += 1
                         match.player2.score_in_game += 0
-                    elif match.results == '01':
+                    elif match.results == "01":
                         match.player1.score_in_game += 0
                         match.player2.score_in_game += 1
-                    elif match.results == '00' or match.results == '11':
+                    elif match.results == "00" or match.results == "11":
                         match.player1.score_in_game += 0.5
                         match.player2.score_in_game += 0.5
             tournament.active_turn = turn
@@ -198,14 +207,14 @@ def end_a_match(tournament):
         elif turn.match_list[i].is_over:
             match_over = match_over + 1
     if len(turn.match_list) == match_over:
-        print('le tour est fini')
+        print("le tour est fini")
     else:
-        response = input('quelle match est fini ?\n=> ')
+        response = input("quelle match est fini ?\n=> ")
         match = turn.match_list[int(response) - 1]
         if not match.is_over:
             match.get_result()
         else:
-            print('un score est deja enregitré pour ce match')
+            print("un score est deja enregitré pour ce match")
         print(match.player1.score_in_game)
         print(match.player2.score_in_game)
 
@@ -236,9 +245,11 @@ def update_turn_list(tournament):
     for turn in tournament.turn_list:
         if turn.is_exist:
             tournament.turns_data.append(turn.serialize())
-    db = TinyDB('db.json')
-    tournament_table = db.table('Tournament')
-    tournament_table.update({'turn_list': tournament.turns_data}, doc_ids=[tournament.db_id])
+    db = TinyDB("db.json")
+    tournament_table = db.table("Tournament")
+    tournament_table.update(
+        {"turn_list": tournament.turns_data}, doc_ids=[tournament.db_id]
+    )
 
 
 def OverTester(match_list):
