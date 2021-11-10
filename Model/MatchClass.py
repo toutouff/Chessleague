@@ -19,8 +19,9 @@ class Match:
     def get_result(self):
         print(self.is_over)
         self.results = input(
-            "result(if player1 win write 10,if it's player2 write 01,if it's a draw write 00 or 11)\n=>")
-        # creer un display et s'assurer du bon placement de cette fonction(condition dans le controlleur)
+            "result(if player1 win write 10,if it's player2 write 01,if it's"
+            " a draw write 00 or 11)\n=>")
+
         if self.results == '10':
             self.player1.score_in_game += 1
             self.player2.score_in_game += 0

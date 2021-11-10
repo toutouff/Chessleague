@@ -1,6 +1,3 @@
-from string import Template
-
-from Model import PlayerClass, TournamentClass
 import pandas as pd
 
 
@@ -43,7 +40,8 @@ def AllTurnRapport(turn_data):
     :return:
     """
     turn_data_frame = pd.DataFrame.from_dict(turn_data)
-    turn_data_frame = turn_data_frame[['name', 'is_over', 'start_date', 'end_date']]
+    turn_data_frame = turn_data_frame[['name', 'is_over',
+                                       'start_date', 'end_date']]
     print(turn_data_frame)
 
 
@@ -57,8 +55,11 @@ def AllMatchRapport(tournament):
         table = []
         if turn.is_exist:
             for match in turn.match_list:
-                row = {'Player_1': match.player1.first_name[0] + '.' + match.player1.name, 'Result': match.results,
-                       'Player_2': match.player2.first_name[0] + '.' + match.player2.name}
+                row = {'Player_1': match.player1.first_name[
+                                       0] + '.' + match.player1.name,
+                       'Result': match.results,
+                       'Player_2': match.player2.first_name[
+                                       0] + '.' + match.player2.name}
                 table.append(row)
             print(turn.name)
             print(pd.DataFrame(table))
@@ -72,8 +73,10 @@ def AllTournamentRapport(tournament_list=None):
     :return:
     """
     tournament_data_frame = pd.DataFrame.from_dict(tournament_list)
-    print(tournament_data_frame[['name', 'location', 'number_of_player', 'start_day', 'end_day', 'month', 'year',
-                                 'description', 'time_mode']], "\n")
+    print(tournament_data_frame[
+              ['name', 'location', 'number_of_player', 'start_day', 'end_day',
+               'month', 'year',
+               'description', 'time_mode']], "\n")
 
 
 def AllPlayerRapport(players_list=None, order=0):

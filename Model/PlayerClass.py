@@ -44,4 +44,3 @@ class Player:
         for player in players_table:
             players_list.append(Player(player))
         return players_list
-
