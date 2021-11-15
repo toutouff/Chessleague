@@ -1,7 +1,7 @@
 from tinydb import *
 
 from Controler import Player
-from Model import PlayerClass, TurnClass
+from Model import PlayerClass
 from Model import TournamentClass
 from View import PlayerDisplay
 from View import TournamentDisplay
@@ -66,7 +66,7 @@ def ActiveTournamentMenu(tournament):
                 launch_tournament(tournament)
                 update_turn_list(tournament)
         elif response == str(0):
-            is_open = False
+            """is_open = False"""
             return False
 
 

@@ -41,12 +41,13 @@ class Turn:
         return self.data_turn
 
     def deserialize(self, turn_data):
-        self.name = turn_data["name"]
-        self.is_over = bool(turn_data["is_over"])
-        self.is_exist = bool(turn_data["is_exist"])
-        self.start_date = datetime.datetime.fromisoformat(turn_data["start_date"])
-        self.end_date = datetime.datetime.fromisoformat(turn_data["end_date"])
-        for y, match_data in enumerate(turn_data["match_list"]):
+        self.name = turn_data['name']
+        self.is_over = bool(turn_data['is_over'])
+        self.is_exist = bool(turn_data['is_exist'])
+        self.start_date = datetime.datetime.fromisoformat \
+            (turn_data['start_date'])
+        self.end_date = datetime.datetime.fromisoformat(turn_data['end_date'])
+        for y, match_data in enumerate(turn_data['match_list'])
             match = self.match_list[y]
             match.de_serialize(match_data)
 

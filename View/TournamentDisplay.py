@@ -1,6 +1,3 @@
-import values as values
-
-
 def MenuTournament():
     """
     first menu for managing tournament
@@ -9,7 +6,8 @@ def MenuTournament():
     print("bienvenu dans le menu des tournois")
     print("voulez-vous : ")
     print("\t 1 - creer un nouveau tournois")
-    print("\t 2 - afficher tout les tournois ")  # this line bealong to the rapport menu
+    print(
+        "\t 2 - afficher tout les tournois ")  # this line bealong to the rapport menu
     print("\t 3 - initialiser un tournoi")  # does it's still work well ?
     print("\t 0 - retour")
     response = input("=> ")
@@ -31,8 +29,10 @@ def NewTournament():
         "end_day": input("jour de fin: "),
         "month": input("mois: "),
         "year": input("année: "),
-        "time_mode": input("mode de jeux(un bullet, un blitz ou un coup rapide): "),
-        "description": input("description: "),
+        "time_mode": input(
+            "mode de jeux(un bullet, un blitz ou un coup rapide): "),
+        "description": input("description: ")
+
     }
     return info_tournament
 
@@ -65,13 +65,10 @@ def MenuActiveTournament(tournament):
     """
     print("bienvenu dans le menu du " + tournament.name)
     print("\tde la ville de " + tournament.location)
-    print(
-        "\tle tournois compte "
-        + str(len(tournament.players_list))
-        + "/"
-        + str(tournament.number_of_player)
-        + "inscrit"
-    )
+    print("\tle tournois compte " + str(
+        len(tournament.players_list)) + "/" + str(
+        tournament.number_of_player) + "inscrit")
+
     print()
     print("voulez vous : ")
     print("\t 1 - afficher la liste des joueurs ")
@@ -98,21 +95,16 @@ def ViewInfoTournament(i, tournament):
 
 
 def ViewInfoMatch(match, i=1):
-    print(
-        f"match #{i}:\t {match.player1.name}({match.player1.score_in_game}) / {match.player2.name}({match.player2.score_in_game})"
-    )
+    print(f'match #{i}:\t {match.player1.name}({match.player1.score_in_game}) / {match.player2.name}({match.player2.score_in_game})')
 
 
 def MenuActiveTurn(tournament):
     if tournament.turn_list.index(tournament.active_turn) == 0:
         print("bienvenu dans le premier tour\n")
     else:
-        print(
-            "bienvenu dans le "
-            + str(tournament.turn_list.index(tournament.active_turn) + 1)
-            + "eme tour\n"
-        )
-    print("voulez vous: ")
+        print('bienvenu dans le ' + str(tournament.turn_list.index(
+            tournament.active_turn) + 1) + 'eme tour\n')
+    print('voulez vous: ')
     print("\t 1 - afficher la liste des match")
     print("\t 2 - entrez un resultat")
     print("\t 3 - generer le prochain tour ")
@@ -125,5 +117,5 @@ def TournamentIsFull(tournament):
     print(
         "le nombre defini de "
         + str(tournament.number_of_player)
-        + " joueur est atteint\n"
-    )
+        + " joueur est atteint\n")
+
