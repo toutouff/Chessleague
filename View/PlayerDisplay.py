@@ -24,7 +24,7 @@ def newPlayer():
         "prenom": input("prenom :"),
         "date de naiscance": input("année de naiscance :"),
         "genre": input("genre :"),
-        "rank": int(input("classement :"))
+        "rank": int(input("classement :")),
     }
     return info_player
 
@@ -38,6 +38,6 @@ def ViewInfoPlayer(name, first_name, i=1):
     :param first_name: first name of the player
     :return: nothing
     """
-    print('\tjoueurs #' + str(i))
-    print('name : ' + name)
-    print('prenom : ' + first_name + '\n')
+    print("\tjoueurs #" + str(i))
+    print("name : " + name)
+    print("prenom : " + first_name + "\n")

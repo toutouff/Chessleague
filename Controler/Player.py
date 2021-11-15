@@ -29,7 +29,7 @@ def PrintAllPlayer(players_list):
 
 def PlayerMenu():
     """just as same as all the menu
-    get a number from a display """
+    get a number from a display"""
     is_open = True
     while is_open:
         response = PlayerDisplay.MenuPlayer()

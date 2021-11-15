@@ -6,13 +6,13 @@ def RapportMenuDisplay():
     view menu
     :return: response: int: witch correspond to the selected answer/button
     """
-    print('bienvenue dans le menu des rapport')
-    print('voulez-vous :')
+    print("bienvenue dans le menu des rapport")
+    print("voulez-vous :")
     print("\t 1 - faire un rapport de tout les tournoi")
     print("\t 2 - faire un rapport de tout les joueurs par ordre alphabetique")
     print("\t 3 - faire un rapport de tout les joueurs par rangs")
-    print('\t 4 - faire un rapport sur un tournoi')
-    print('\t 0 - retour')
+    print("\t 4 - faire un rapport sur un tournoi")
+    print("\t 0 - retour")
     response = int(input("=> "))
     return response
 
@@ -22,13 +22,13 @@ def RapportTournamentMenuDisplay():
     view menu
     :return: response: int: witch correspond to the selected answer/button
     """
-    print('bienvenue dans le menu des rapport de tournoi')
-    print('voulez-vous :')
+    print("bienvenue dans le menu des rapport de tournoi")
+    print("voulez-vous :")
     print("\t 1 - faire un rapport de tout les joueurs par ordre alphabetique")
-    print('\t 2 - faire un rapport de tout les joueurs par rangs')
-    print('\t 3 - faire un rapport de tout les tours')
-    print('\t 4 - faire un rapport de tout les match')
-    print('\t 0 - retour')
+    print("\t 2 - faire un rapport de tout les joueurs par rangs")
+    print("\t 3 - faire un rapport de tout les tours")
+    print("\t 4 - faire un rapport de tout les match")
+    print("\t 0 - retour")
     response = int(input("=> "))
     return response
 
@@ -63,7 +63,7 @@ def AllMatchRapport(tournament):
                 table.append(row)
             print(turn.name)
             print(pd.DataFrame(table))
-    print('\n')
+    print("\n")
 
 
 def AllTournamentRapport(tournament_list=None):
@@ -73,10 +73,22 @@ def AllTournamentRapport(tournament_list=None):
     :return:
     """
     tournament_data_frame = pd.DataFrame.from_dict(tournament_list)
-    print(tournament_data_frame[
-              ['name', 'location', 'number_of_player', 'start_day', 'end_day',
-               'month', 'year',
-               'description', 'time_mode']], "\n")
+    print(
+        tournament_data_frame[
+            [
+                "name",
+                "location",
+                "number_of_player",
+                "start_day",
+                "end_day",
+                "month",
+                "year",
+                "description",
+                "time_mode",
+            ]
+        ],
+        "\n",
+    )
 
 
 def AllPlayerRapport(players_list=None, order=0):
@@ -88,8 +100,8 @@ def AllPlayerRapport(players_list=None, order=0):
     """
     players_data_frame = pd.DataFrame.from_dict(players_list)
     if order == 1:
-        print(players_data_frame.sort_values(by='nom'), '\n')
+        print(players_data_frame.sort_values(by="nom"), "\n")
     elif order == 2:
-        print(players_data_frame.sort_values(by='rank'), '\n')
+        print(players_data_frame.sort_values(by="rank"), "\n")
     elif order == 0:
-        print(players_data_frame, '\n')
+        print(players_data_frame, "\n")
