@@ -25,8 +25,8 @@ class Tournament:
         self.month = self.info_tournament["month"]
         self.year = self.info_tournament["year"]
         self.active_turn = 0
-        self.number_of_player = int(self.info_tournament['number_of_player']) \
-                                or 8
+        self.number_of_player = int(
+            self.info_tournament['number_of_player']) or 8
         for i in range(int(self.number_of_player / 2)):
             self.turn_list.append(Turn('Turn #' + str(i),
                                        self.number_of_player))
@@ -43,20 +43,20 @@ class Tournament:
         self.active_turn.is_exist = True
         self.active_turn.start_date = datetime.now()
 
-    def nextTurn(self):
+    def next_turn(self):
         self.active_turn.end_date = datetime.now()
         if self.turn_list.index(self.active_turn) == int(
                 len(self.turn_list) - 1):
             print("le tournoie est fini")
         else:
             self.active_turn = self.turn_list[
-            self.turn_list.index(self.active_turn) + 1]
+                self.turn_list.index(self.active_turn) + 1]
             self.active_turn.get_pairs_list(pairs_generator(self.players_list))
             self.active_turn.generate_match()
             self.active_turn.is_exist = True
             self.active_turn.start_date = datetime.now()
 
-    def AddPlayer(self, temp_player):
+    def add_player(self, temp_player):
         """
         a function to add a player to a tournament
         :param temp_player:
@@ -65,17 +65,17 @@ class Tournament:
         self.players_list.append(temp_player)
         self.players_data.append(temp_player.data_player)
 
-    def Save(self):
+    def save(self):
         """
         should create the save of the instance into the database
         :return: nothing
         """
-        self.SerializeDataTournament()
+        self.serialize_data_tournament()
         db = TinyDB("db.json")
         tournament_table = db.table("Tournament")
         self.db_id = tournament_table.insert(self.data_tournament)
 
-    def UpdatePlayersList(self):
+    def update_players_list(self):
         """
         should update the actual instance into the database
         :return: nothing
@@ -93,7 +93,7 @@ class Tournament:
         tournament_table.update({'turn_list': self.turns_data},
                                 doc_ids=[self.db_id])
 
-    def SerializeDataTournament(self):
+    def serialize_data_tournament(self):
         """
         serialize the data so it can be stored
         :return: self.data tournament:la data serialiser pour la db
@@ -122,7 +122,7 @@ class Tournament:
         return self.turns_data
 
     @staticmethod
-    def All():
+    def all():
         """
         create a list that contains evry tournament in the db
         :return:the famous list
@@ -142,13 +142,12 @@ def pairs_generator_for_turn_1(players_list):
     :return: pairs_list
     """
 
-    def getRank(player):
+    def get_rank(player):
         return int(player.rank)
 
-    ranked_players = []
     pairs_list = []
     number_of_pairs = int(len(players_list) / 2)
-    ranked_players = sorted(players_list, key=getRank)
+    ranked_players = sorted(players_list, key=get_rank)
 
     print("nombre de pairs a genéré est de " + str(number_of_pairs))
 

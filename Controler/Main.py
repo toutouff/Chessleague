@@ -4,7 +4,7 @@ from Controler import Rapport
 from View import MainDisplay
 
 
-def MainMenu():
+def main_menu():
     """
     use the response from the main view
     and make make a decision
@@ -12,13 +12,13 @@ def MainMenu():
     """
     is_open = True
     while is_open:
-        response = MainDisplay.Menu_Principal()
+        response = MainDisplay.menu_principal()
         if response == str(1):
-            Player.PlayerMenu()
+            Player.player_menu()
         elif response == str(2):
-            Tournament.TournamentMenu()
+            Tournament.tournament_menu()
         elif response == str(3):
-            Rapport.RapportMenu()
+            Rapport.rapport_menu()
         elif response == str(0):
             print("vous avez quitter")
             is_open = False

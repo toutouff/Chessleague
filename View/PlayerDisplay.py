@@ -1,4 +1,5 @@
-def MenuPlayer():
+# coding=utf-8
+def menu_player():
     """
     first menu for managing the player
     :return: response: int: witch correspond to the selected answer/button
@@ -13,7 +14,7 @@ def MenuPlayer():
     return response
 
 
-def newPlayer():
+def new_player():
     """
     ask info with input for creating a new player
     :return: info_player: dict: contains all the info for a new player
@@ -29,7 +30,7 @@ def newPlayer():
     return info_player
 
 
-def ViewInfoPlayer(name, first_name, i=1):
+def view_info_player(name, first_name, i=1):
     """
     print the basic info of a player
     ideal to print a enumeration of player

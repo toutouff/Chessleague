@@ -3,7 +3,7 @@ from Controler.Tournament import init_tournament
 from View.RapportDisplay import *
 
 
-def RapportMenu():
+def rapport_menu():
     """
     controller
     :return:
@@ -24,12 +24,12 @@ def RapportMenu():
             AllPlayerRapport(players_table.all(), 2)
         elif response == 4:
             tournament = init_tournament()
-            RapportTournamentMenu(tournament)
+            rapport_tournament_menu(tournament)
         elif response == 0:
             is_open = False
 
 
-def RapportTournamentMenu(tournament):
+def rapport_tournament_menu(tournament):
     """
     controller
     :param tournament:
