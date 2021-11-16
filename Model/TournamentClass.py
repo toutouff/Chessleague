@@ -1,7 +1,5 @@
 from datetime import datetime
-
-from tinydb import *
-
+from tinydb import TinyDB
 from Model.TurnClass import Turn
 
 

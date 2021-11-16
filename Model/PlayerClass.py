@@ -1,4 +1,4 @@
-from tinydb import *
+from tinydb import TinyDB
 
 
 class Player:
@@ -13,7 +13,7 @@ class Player:
         self.rank = self.data_player["rank"]
         self.score_in_game = 0
 
-    def Save(self):
+    def save(self):
         """
         to save the player in the db
         :return: nothing
@@ -23,7 +23,7 @@ class Player:
         players_table.insert(self.data_player)
 
     @staticmethod
-    def Reset():
+    def reset():
         """
         reset the player table
         :return:
@@ -33,7 +33,7 @@ class Player:
         players_table.truncate()
 
     @staticmethod
-    def All():
+    def all():
         """
         create a list with all the player inside the db
         :return: players_list

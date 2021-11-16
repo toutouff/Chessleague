@@ -1,6 +1,8 @@
 from tinydb import TinyDB
 from Controler.Tournament import init_tournament
-from View.RapportDisplay import *
+from View.RapportDisplay import RapportMenuDisplay, AllTournamentRapport, \
+    AllPlayerRapport, RapportTournamentMenuDisplay, AllTurnRapport, \
+    AllMatchRapport
 
 
 def rapport_menu():

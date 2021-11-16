@@ -11,7 +11,7 @@ def new_player():
     """
     temp_player = PlayerDisplay.new_player()
     temp_player = PlayerClass.Player(temp_player)
-    temp_player.Save()
+    temp_player.save()
 
 
 def print_all_player(players_list):
@@ -34,11 +34,11 @@ def player_menu():
     while is_open:
         response = PlayerDisplay.menu_player()
         if response == 1:
-            players_list = PlayerClass.Player.All()
+            players_list = PlayerClass.Player.all()
             print_all_player(players_list)
         elif response == 2:
             new_player()
         elif response == 3:
-            PlayerClass.Player.Reset()
+            PlayerClass.Player.reset()
         elif response == 0:
             is_open = False

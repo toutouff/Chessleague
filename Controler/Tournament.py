@@ -1,4 +1,4 @@
-from tinydb import *
+from tinydb import TinyDB
 
 from Controler import Player
 from Model import PlayerClass
@@ -16,7 +16,7 @@ def tournament_menu():
         if tournament_exist:
             tournament_exist = active_tournament_menu(tournament)
         else:
-            response = TournamentDisplay.MenuTournament()
+            response = TournamentDisplay.menu_tournament()
             if response == str(1):
                 tournament = new_tournament()
                 tournament.save()
@@ -41,7 +41,7 @@ def active_tournament_menu(tournament):
     tournament = tournament
     is_open = True
     while is_open:
-        response = TournamentDisplay.MenuActiveTournament(tournament)
+        response = TournamentDisplay.menu_active_tournament(tournament)
         if response == str(1):
             Player.print_all_player(tournament.players_list)
         elif response == str(2):
@@ -49,13 +49,13 @@ def active_tournament_menu(tournament):
                 temp_player = new_player()
                 tournament.add_player(temp_player)
             else:
-                TournamentDisplay.TournamentIsFull(tournament)
+                TournamentDisplay.tournament_is_full(tournament)
         elif response == str(3):
             if not tournament.number_of_player == len(tournament.players_list):
                 tournament.add_player(init_player_by_name())
                 tournament.update_players_list()
             else:
-                TournamentDisplay.TournamentIsFull(tournament)
+                TournamentDisplay.tournament_is_full(tournament)
         elif response == str(4):
             tournament.launch()
         elif response == str(5):
@@ -76,7 +76,7 @@ def new_tournament():
     create a new tournament(so get info from display and send it to the model)
     :return: the instance of the Tournament class created
     """
-    tournament = TournamentClass.Tournament(TournamentDisplay.NewTournament())
+    tournament = TournamentClass.Tournament(TournamentDisplay.new_tournament())
     return tournament
 
 
@@ -89,7 +89,7 @@ def new_player():
     """
     info_player = PlayerDisplay.new_player()
     temp_player = PlayerClass.Player(info_player)
-    temp_player.Save()
+    temp_player.save()
     return temp_player
 
 
@@ -133,7 +133,7 @@ def print_all_tournament(tournament_list):
     i = 0
     for tournament in tournament_list:
         i = i + 1
-        TournamentDisplay.ViewInfoTournament(i, tournament)
+        TournamentDisplay.view_info_tournament(i, tournament)
 
 
 def init_tournament():
@@ -142,7 +142,7 @@ def init_tournament():
     tournament_list = tournament_table.all()
     for i, tournament_data in enumerate(tournament_list):  #
         tournament = TournamentClass.Tournament(tournament_data)
-        TournamentDisplay.ViewInfoTournament(i + 1, tournament)  #
+        TournamentDisplay.view_info_tournament(i + 1, tournament)  #
     print("veuillez indiquer le numero du tournoi : ")
     result_id = int
     valid_input = True
@@ -209,7 +209,7 @@ def end_a_match(tournament):
     match_over = 0
     for i in range(len(turn.match_list)):
         if not turn.match_list[i].is_over:
-            TournamentDisplay.ViewInfoMatch(turn.match_list[i], i + 1)
+            TournamentDisplay.view_info_match(turn.match_list[i], i + 1)
         elif turn.match_list[i].is_over:
             match_over = match_over + 1
     if len(turn.match_list) == match_over:
@@ -228,10 +228,10 @@ def end_a_match(tournament):
 def launch_tournament(tournament):
     is_active = True
     while is_active:
-        response = TournamentDisplay.MenuActiveTurn(tournament)
+        response = TournamentDisplay.menu_active_turn(tournament)
         if response == 1:
             for i, match in enumerate(tournament.active_turn.match_list):
-                TournamentDisplay.ViewInfoMatch(match, i + 1)
+                TournamentDisplay.view_info_match(match, i + 1)
         if response == 2:
             end_a_match(tournament)
             update_turn_list(tournament)
