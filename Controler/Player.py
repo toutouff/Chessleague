@@ -38,7 +38,5 @@ def player_menu():
             print_all_player(players_list)
         elif response == 2:
             new_player()
-        elif response == 3:
-            PlayerClass.Player.reset()
         elif response == 0:
             is_open = False

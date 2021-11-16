@@ -22,17 +22,6 @@ class Player:
         players_table = db.table("players")
         players_table.insert(self.data_player)
 
-    @staticmethod
-    def reset():
-        """
-        reset the player table
-        :return:
-        """
-        db = TinyDB("db.json")
-        players_table = db.table("players")
-        players_table.truncate()
-
-    @staticmethod
     def all():
         """
         create a list with all the player inside the db

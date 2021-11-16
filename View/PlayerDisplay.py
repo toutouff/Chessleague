@@ -8,7 +8,6 @@ def menu_player():
     print("voulez-vous : ")
     print("\t 1 - afficher la liste des joueurs ")
     print("\t 2 - creer un nouveau joueur ")
-    print("\t 3 - reset la database")
     print("\t 0 - menu principal")
     response = int(input("=> "))
     return response
