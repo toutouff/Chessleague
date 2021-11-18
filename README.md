@@ -14,7 +14,7 @@ les bibliothèques pandas et tinydb sont requise
 
 ## execution
 
-Démarrer ChessLeague il suffit de démarré [main.py](http://github.com/toutouff/ChessLeague/main.py) grâce a python3
+Démarrer ChessLeague il suffit de démarré [main.py](https://github.com/toutouff/Chessleague/blob/main/main.py) grâce a python3
 
 ## Utilisation
 
