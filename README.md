@@ -44,31 +44,17 @@ l'arborescence des menu est fait de même :
 	c. retourner au menu principal 
 2. menu des championnat
 	a. creer un nouveau tournoi
-
-	creer un nouveau tournoi et lance le menu de gestion du tournoi en question 
-
+		creer un nouveau tournoi et lance le menu de gestion du tournoi en question 
 	b. afficher tout les tournois
-
-	affiche la liste de tout les tournois
-
+		affiche la liste de tout les tournois
 	c. initialiser un tournoi
-
-	affiche tout les tournoi et permet d'en charger un depuis la base de donné si il n'est pas fini
-	
-
+		affiche tout les tournoi et permet d'en charger un depuis la base de donné si il n'est pas fini
 2. (bis)Menu de gestion d'un championat avant lancement 
-
 	a. afficher la liste des joueurs
-
-	affiche la liste de tout les joueurs dans las base de donné
-
+		affiche la liste de tout les joueurs dans las base de donné
 	b. creer un nouveau joueurs
-
-	creer un nouveau joueurs et l'inscrit automatiquement
-
+		creer un nouveau joueurs et l'inscrit automatiquement
 	c. Initialiser un joueurs depuis la base de donné
-
-	initalise un joueurs depuis la base de donne et l'inscrit automatiquement
-
+		initalise un joueurs depuis la base de donne et l'inscrit automatiquement
 	d. generer le premier tour
 	e. lancer le premier tour
