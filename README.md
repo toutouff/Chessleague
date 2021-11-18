@@ -37,42 +37,38 @@ il suffit de répondre au niveau du '=>' avec le numéro correspondant a votre c
 l'arborescence des menu est fait de même :
 
 1. menu des joueurs
-    1. afficher la liste des joueurs
-
-    affiche la liste de tout les joueurs dans la base de donné
-
-    2. creer un nouveau joueur
-
-    Créer un joueurs
-
-    3. retourner au menu principal 
+	a. afficher la liste des joueurs
+		affiche la liste de tout les joueurs dans la base de donné
+	b. creer un nouveau joueur
+		Créer un joueurs
+	c. retourner au menu principal 
 2. menu des championnat
-	1. creer un nouveau tournoi
+	a. creer un nouveau tournoi
 
 	creer un nouveau tournoi et lance le menu de gestion du tournoi en question 
 
-	2. afficher tout les tournois
+	b. afficher tout les tournois
 
 	affiche la liste de tout les tournois
 
-	3. initialiser un tournoi
+	c. initialiser un tournoi
 
 	affiche tout les tournoi et permet d'en charger un depuis la base de donné si il n'est pas fini
 	
 
 2. (bis)Menu de gestion d'un championat avant lancement 
 
-	1. afficher la liste des joueurs
+	a. afficher la liste des joueurs
 
 	affiche la liste de tout les joueurs dans las base de donné
 
-	2. creer un nouveau joueurs
+	b. creer un nouveau joueurs
 
 	creer un nouveau joueurs et l'inscrit automatiquement
 
-	3. Initialiser un joueurs depuis la base de donné
+	c. Initialiser un joueurs depuis la base de donné
 
 	initalise un joueurs depuis la base de donne et l'inscrit automatiquement
 
-	4. generer le premier tour
-	5. lancer le premier tour
+	d. generer le premier tour
+	e. lancer le premier tour
