@@ -25,6 +25,7 @@ def new_player():
         "date de naiscance": input("année de naiscance :"),
         "genre": input("genre :"),
         "rank": int(input("classement :")),
+        "score in game": 0
     }
     return info_player
 

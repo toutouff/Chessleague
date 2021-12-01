@@ -25,7 +25,7 @@ def RapportTournamentMenuDisplay():
     print("bienvenue dans le menu des rapport de tournoi")
     print("voulez-vous :")
     print("\t 1 - faire un rapport de tout les joueurs par ordre alphabetique")
-    print("\t 2 - faire un rapport de tout les joueurs par rangs")
+    print("\t 2 - faire un rapport de tout les joueurs par classement")
     print("\t 3 - faire un rapport de tout les tours")
     print("\t 4 - faire un rapport de tout les match")
     print("\t 0 - retour")
@@ -102,6 +102,9 @@ def AllPlayerRapport(players_list=None, order=0):
     if order == 1:
         print(players_data_frame.sort_values(by="nom"), "\n")
     elif order == 2:
+        print(players_data_frame.sort_values(by="score in game",
+                                             ascending=False), "\n")
+    elif order == 3:
         print(players_data_frame.sort_values(by="rank"), "\n")
     elif order == 0:
         print(players_data_frame, "\n")

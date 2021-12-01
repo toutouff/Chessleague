@@ -25,14 +25,20 @@ class Match:
             self.player1.score_in_game += 1
             self.player2.score_in_game += 0
             self.is_over = True
+            self.player1.update_score()
+            self.player2.update_score()
         elif self.results == "01":
             self.player1.score_in_game += 0
             self.player2.score_in_game += 1
             self.is_over = True
+            self.player1.update_score()
+            self.player2.update_score()
         elif self.results == "00" or self.results == "11":
             self.player1.score_in_game += 0.5
             self.player2.score_in_game += 0.5
             self.is_over = True
+            self.player1.update_score()
+            self.player2.update_score()
         else:
             print("veuillez entré un resultat valide")
             self.is_over = False

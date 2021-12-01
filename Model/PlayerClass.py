@@ -11,7 +11,7 @@ class Player:
         self.name = self.data_player["nom"]
         self.first_name = self.data_player["prenom"]
         self.rank = self.data_player["rank"]
-        self.score_in_game = 0
+        self.score_in_game = int(self.data_player["score in game"])
 
     def save(self):
         """
@@ -22,6 +22,7 @@ class Player:
         players_table = db.table("players")
         players_table.insert(self.data_player)
 
+    @staticmethod
     def all():
         """
         create a list with all the player inside the db
@@ -33,3 +34,6 @@ class Player:
         for player in players_table:
             players_list.append(Player(player))
         return players_list
+
+    def update_score(self):
+        self.data_player['score in game'] = self.score_in_game

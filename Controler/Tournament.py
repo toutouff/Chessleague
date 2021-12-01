@@ -48,12 +48,15 @@ def active_tournament_menu(tournament):
             if not tournament.number_of_player == len(tournament.players_list):
                 temp_player = new_player()
                 tournament.add_player(temp_player)
+                tournament.update_players_list()
             else:
                 TournamentDisplay.tournament_is_full(tournament)
         elif response == str(3):
             if not tournament.number_of_player == len(tournament.players_list):
-                tournament.add_player(init_player_by_name())
-                tournament.update_players_list()
+                temp_player = init_player_by_name()
+                if not temp_player == str(0):
+                    tournament.add_player(temp_player)
+                    tournament.update_players_list()
             else:
                 TournamentDisplay.tournament_is_full(tournament)
         elif response == str(4):
@@ -107,16 +110,18 @@ def init_player_by_name():
         i += 1
     print("veuillez indiquer le numero du joueur : ")
     result_id = int
-    valid_input = True
-    while valid_input:
+    invalid_input = True
+    while invalid_input:
         try:
             result_id = input("=>")
             if players_table.get(doc_id=int(result_id)) is not None:
-                valid_input = False
+                invalid_input = False
                 result_id = int(result_id)
+            elif result_id == str(0):
+                return result_id
             else:
                 print("le nombre indiquer ne mene a rien")
-                valid_input = True
+                invalid_input = True
         except ValueError:
             print("merci d'entré un nombre")
     player_data = players_table.get(doc_id=result_id)
@@ -163,8 +168,9 @@ def init_tournament():
     tournament.players_list = []  # reset de la list de joueurs
     for player_data in tournament_data["player_list"]:
         tournament.players_list.append(
-            PlayerClass.Player(player_data)
-        )  # ajout des joueurs a partir du dict players_list contenu
+            PlayerClass.Player(player_data))
+        tournament.players_data.append(player_data)
+        # ajout des joueurs a partir du dict players_list contenu
         # dans tournament_data
 
     for y, turn_data in enumerate(
@@ -189,7 +195,7 @@ def init_tournament():
                 )
                 match.player1 = tournament.players_list[player_id_1]
                 match.player2 = tournament.players_list[player_id_2]
-                if match.is_over:
+                """if match.is_over:
                     if match.results == "10":
                         match.player1.score_in_game += 1
                         match.player2.score_in_game += 0
@@ -198,7 +204,7 @@ def init_tournament():
                         match.player2.score_in_game += 1
                     elif match.results == "00" or match.results == "11":
                         match.player1.score_in_game += 0.5
-                        match.player2.score_in_game += 0.5
+                        match.player2.score_in_game += 0.5"""
             tournament.active_turn = turn
 
     return tournament
@@ -235,6 +241,7 @@ def launch_tournament(tournament):
         if response == 2:
             end_a_match(tournament)
             update_turn_list(tournament)
+            tournament.update_players_list()
         if response == 3:
             if over_tester(tournament.active_turn.match_list):
                 tournament.active_turn.is_over = True

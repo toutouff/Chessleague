@@ -95,8 +95,8 @@ def view_info_tournament(i, tournament):
 
 
 def view_info_match(match, i=1):
-    print(f'match #{i}:\t {match.player1.name}{match.player1.score_in_game}'
-          f'{match.player2.name}{match.player2.score_in_game}')
+    print(f'match #{i}:\t {match.player1.name} {match.player1.score_in_game}'
+          f' {match.player2.name} {match.player2.score_in_game}')
 
 
 def menu_active_turn(tournament):

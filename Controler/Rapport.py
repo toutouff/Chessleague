@@ -23,7 +23,7 @@ def rapport_menu():
             AllPlayerRapport(players_table.all(), 1)
         elif response == 3:
             players_table = db.table("players")
-            AllPlayerRapport(players_table.all(), 2)
+            AllPlayerRapport(players_table.all(), 3)
         elif response == 4:
             tournament = init_tournament()
             rapport_tournament_menu(tournament)
