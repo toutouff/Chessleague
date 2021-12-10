@@ -3,12 +3,12 @@ def menu_tournament():
     first menu for managing tournament
     :return: response: int: witch correspond to the selected answer/button
     """
-    print("bienvenu dans le menu des tournois")
-    print("voulez-vous : ")
-    print("\t 1 - creer un nouveau tournois")
-    print("\t 2 - afficher tout les tournois ")
-    print("\t 3 - initialiser un tournoi")
-    print("\t 0 - retour")
+    print("Bienvenu Dans le menu des tournois")
+    print("Voulez-vous : ")
+    print("\t 1 - Créer un nouveau tournoi")
+    print("\t 2 - Afficher tout les tournois ")
+    print("\t 3 - Initialiser un tournoi")
+    print("\t 0 - Retour")
     response = input("=> ")
     return response
 
@@ -18,13 +18,13 @@ def new_tournament():
     ask info with input for creating a new tournament
     :return: info_tournament: dict: contains all the info for a new tournament
     """
-    print("bienvenue sur la page de creation de tournoi")
-    print("creation d'un nouveau tournois")
+    print("Bienvenue sur la page de création de tournoi")
+    print("création d'un nouveau tournoi")
     info_tournament = {
         "name": input("nom du tournois: "),
         "location": input("location du tournoi: "),
-        "number_of_player": input("nombres de joueurs: "),
-        "start_day": input("jour de debut: "),
+        "number_of_player": input("nombre de joueurs: "),
+        "start_day": input("jour de début: "),
         "end_day": input("jour de fin: "),
         "month": input("mois: "),
         "year": input("année: "),
@@ -44,13 +44,13 @@ def menu_tournament_initialized(tournament):
     """
     print("bienvenu dans le menu des tournois ")
     print(
-        "un tournoi est actuellement initialiser \n"
+        "un tournoi est actuellement initialisé \n"
         "\tNom du tournoi : " + tournament.name + "\n"
         "\tVille du tournoi : " + tournament.location
     )
     print("voulez-vous : ")
-    print("\t 1 - creer un nouveau tournois")
-    print("\t 2 - acceder au tournoi initialisé")
+    print("\t 1 - créer un nouveau tournoi")
+    print("\t 2 - accéder au tournoi initialisé")
     print("\t 0 - retour")
     response = int(input("=> "))
     return response
@@ -63,20 +63,20 @@ def menu_active_tournament(tournament):
     :param tournament: instance of Tournament class
     :return: response: int: witch correspond to the selected answer/button
     """
-    print("bienvenu dans le menu du " + tournament.name)
+    print("Bienvenu dans le menu du " + tournament.name)
     print("\tde la ville de " + tournament.location)
-    print("\tle tournois compte " + str(
+    print("\tle tournoi compte " + str(
         len(tournament.players_list)) + "/" + str(
         tournament.number_of_player) + "inscrit")
 
     print()
     print("voulez vous : ")
-    print("\t 1 - afficher la liste des joueurs ")
-    print("\t 2 - creer un nouveau joueur ")
-    print("\t 3 - Initaliser un joueur depuis la base de donné")
-    print("\t 4 - generer le premier tour")
-    print("\t 5 - lancer le tournoi")
-    print("\t 0 - retour")
+    print("\t 1 - Afficher la liste des joueurs ")
+    print("\t 2 - Créer un nouveau joueur ")
+    print("\t 3 - Initaliser un joueur depuis la base de données")
+    print("\t 4 - Générer le premier tour")
+    print("\t 5 - Lancer le tournoi")
+    print("\t 0 - Retour")
     response = input("=> ")
     return response
 
@@ -90,7 +90,7 @@ def view_info_tournament(i, tournament):
     :return: nothing
     """
     print("\tTournoi #" + str(i))
-    print("name : " + tournament.name)
+    print("nom : " + tournament.name)
     print("location : " + tournament.location + "\n")
 
 
@@ -101,21 +101,21 @@ def view_info_match(match, i=1):
 
 def menu_active_turn(tournament):
     if tournament.turn_list.index(tournament.active_turn) == 0:
-        print("bienvenu dans le premier tour\n")
+        print("Bienvenu dans le premier tour\n")
     else:
-        print('bienvenu dans le ' + str(tournament.turn_list.index(
-            tournament.active_turn) + 1) + 'eme tour\n')
-    print('voulez vous: ')
-    print("\t 1 - afficher la liste des match")
-    print("\t 2 - entrez un resultat")
-    print("\t 3 - generer le prochain tour ")
-    print("\t 0 - retour")
+        print("Bienvenu dans le " + str(tournament.turn_list.index(
+            tournament.active_turn) + 1) + "eme tour\n")
+    print("Voulez vous: ")
+    print("\t 1 - Afficher la liste des match")
+    print("\t 2 - Entrez un resultat")
+    print("\t 3 - Générer le prochain tour ")
+    print("\t 0 - Retour")
     response = int(input("=> "))
     return response
 
 
 def tournament_is_full(tournament):
     print(
-        "le nombre defini de "
+        "Le nombre defini de "
         + str(tournament.number_of_player)
-        + " joueur est atteint\n")
+        + " joueurs est atteint\n")

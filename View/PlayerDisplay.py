@@ -4,11 +4,11 @@ def menu_player():
     first menu for managing the player
     :return: response: int: witch correspond to the selected answer/button
     """
-    print("bienvenue dans le menu des joueurs \n")
-    print("voulez-vous : ")
-    print("\t 1 - afficher la liste des joueurs ")
-    print("\t 2 - creer un nouveau joueur ")
-    print("\t 0 - menu principal")
+    print("Bienvenue dans le menu des Joueurs \n")
+    print("Voulez-vous : ")
+    print("\t 1 - Afficher la liste des joueurs ")
+    print("\t 2 - Créer un nouveau joueur ")
+    print("\t 0 - Menu principal")
     response = int(input("=> "))
     return response
 
@@ -18,11 +18,11 @@ def new_player():
     ask info with input for creating a new player
     :return: info_player: dict: contains all the info for a new player
     """
-    print("creation d'un nouveau joueurs")
+    print("création d'un nouveau joueur")
     info_player = {
         "nom": input("nom : "),
         "prenom": input("prenom :"),
-        "date de naiscance": input("année de naiscance :"),
+        "date de naissance": input("année de naissance :"),
         "genre": input("genre :"),
         "rank": int(input("classement :")),
         "score in game": 0
@@ -39,6 +39,6 @@ def view_info_player(name, first_name, i=1):
     :param first_name: first name of the player
     :return: nothing
     """
-    print("\tjoueurs #" + str(i))
-    print("name : " + name)
-    print("prenom : " + first_name + "\n")
+    print("\tjoueur #" + str(i))
+    print("nom : " + name)
+    print("prénom : " + first_name + "\n")
