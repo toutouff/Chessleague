@@ -1,4 +1,5 @@
 from Model.PlayerClass import Player
+from Controler.InputChecker import Checkinput
 
 
 class Match:
@@ -18,7 +19,7 @@ class Match:
 
     def get_result(self):
         print(self.is_over)
-        self.results = input(
+        self.results = Checkinput.int(
             "result(if player1 win write 10,if it's player2 write 01,if it's"
             " a draw write 00 or 11)\n=>")
         if self.results == '10':

@@ -1,16 +1,18 @@
 # coding=utf-8
+from Controler.InputChecker import *
+
+
 def menu_player():
     """
     first menu for managing the player
     :return: response: int: witch correspond to the selected answer/button
     """
-    print("bienvenue dans le menu des joueurs \n")
-    print("voulez-vous : ")
-    print("\t 1 - afficher la liste des joueurs ")
-    print("\t 2 - creer un nouveau joueur ")
-    print("\t 0 - menu principal")
-    response = int(input("=> "))
-    return response
+    print("Bienvenue dans le menu des Joueurs \n")
+    print("Voulez-vous : ")
+    print("\t 1 - Afficher la liste des joueurs ")
+    print("\t 2 - Créer un nouveau joueur ")
+    print("\t 0 - Menu principal")
+    return Checkinput.int("=> ")
 
 
 def new_player():
@@ -18,13 +20,13 @@ def new_player():
     ask info with input for creating a new player
     :return: info_player: dict: contains all the info for a new player
     """
-    print("creation d'un nouveau joueurs")
+    print("création d'un nouveau joueur")
     info_player = {
-        "nom": input("nom : "),
-        "prenom": input("prenom :"),
-        "date de naiscance": input("année de naiscance :"),
-        "genre": input("genre :"),
-        "rank": int(input("classement :")),
+        "nom": Checkinput.str("nom : "),
+        "prenom": Checkinput.str("prenom :"),
+        "date de naissance": Checkinput.int("année de naissance :"),
+        "genre": Checkinput.str("genre :"),
+        "rank": Checkinput.int("classement :"),
         "score in game": 0
     }
     return info_player
@@ -39,6 +41,6 @@ def view_info_player(name, first_name, i=1):
     :param first_name: first name of the player
     :return: nothing
     """
-    print("\tjoueurs #" + str(i))
-    print("name : " + name)
-    print("prenom : " + first_name + "\n")
+    print("\tjoueur #" + str(i))
+    print("nom : " + name)
+    print("prénom : " + first_name + "\n")
