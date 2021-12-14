@@ -32,7 +32,7 @@ def player_menu():
     get a number from a display"""
     is_open = True
     while is_open:
-        response = PlayerDisplay.menu_player()
+        response = int(PlayerDisplay.menu_player())
         if response == 1:
             players_list = PlayerClass.Player.all()
             print_all_player(players_list)

@@ -1,4 +1,7 @@
 # coding=utf-8
+from Controler.InputChecker import *
+
+
 def menu_player():
     """
     first menu for managing the player
@@ -9,8 +12,7 @@ def menu_player():
     print("\t 1 - Afficher la liste des joueurs ")
     print("\t 2 - Créer un nouveau joueur ")
     print("\t 0 - Menu principal")
-    response = int(input("=> "))
-    return response
+    return Checkinput.int("=> ")
 
 
 def new_player():
@@ -20,11 +22,11 @@ def new_player():
     """
     print("création d'un nouveau joueur")
     info_player = {
-        "nom": input("nom : "),
-        "prenom": input("prenom :"),
-        "date de naissance": input("année de naissance :"),
-        "genre": input("genre :"),
-        "rank": int(input("classement :")),
+        "nom": Checkinput.str("nom : "),
+        "prenom": Checkinput.str("prenom :"),
+        "date de naissance": Checkinput.int("année de naissance :"),
+        "genre": Checkinput.str("genre :"),
+        "rank": Checkinput.int("classement :"),
         "score in game": 0
     }
     return info_player

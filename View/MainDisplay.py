@@ -1,3 +1,5 @@
+from Controler.InputChecker import Checkinput
+
 def menu_principal():
     """
     first menu to chose between all menu
@@ -9,5 +11,4 @@ def menu_principal():
     print("\t 2 - Menu des tournoi")
     print("\t 3 - Menu des Rapport")
     print("\t 0 - Quitter")
-    response = input("=> ")
-    return response
+    return Checkinput.int("=>")

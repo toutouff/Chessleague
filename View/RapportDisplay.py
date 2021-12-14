@@ -1,7 +1,8 @@
 import pandas as pd
+from Controler.InputChecker import Checkinput
 
 
-def RapportMenuDisplay():
+def rapport_menu_display():
     """
     view menu
     :return: response: int: witch correspond to the selected answer/button
@@ -13,11 +14,10 @@ def RapportMenuDisplay():
     print("\t 3 - Faire un rapport de tout les joueurs par rang")
     print("\t 4 - Faire un rapport sur un tournoi")
     print("\t 0 - Retour")
-    response = int(input("=> "))
-    return response
+    return Checkinput.int("=> ")
 
 
-def RapportTournamentMenuDisplay():
+def rapport_tournament_menu_display():
     """
     view menu
     :return: response: int: witch correspond to the selected answer/button
@@ -29,11 +29,10 @@ def RapportTournamentMenuDisplay():
     print("\t 3 - Faire un rapport de tout les tours")
     print("\t 4 - Faire un rapport de tout les matchs")
     print("\t 0 - Retour")
-    response = int(input("=> "))
-    return response
+    return Checkinput.int("=>")
 
 
-def AllTurnRapport(turn_data):
+def all_turn_rapport(turn_data):
     """
      display
     :param turn_data:
@@ -45,7 +44,7 @@ def AllTurnRapport(turn_data):
     print(turn_data_frame)
 
 
-def AllMatchRapport(tournament):
+def all_match_rapport(tournament):
     """
     display
     :param tournament:Model.TournamentClass.Tournament
@@ -66,7 +65,7 @@ def AllMatchRapport(tournament):
     print("\n")
 
 
-def AllTournamentRapport(tournament_list=None):
+def all_tournament_rapport(tournament_list=None):
     """
     display
     :param tournament_list:
@@ -91,7 +90,7 @@ def AllTournamentRapport(tournament_list=None):
     )
 
 
-def AllPlayerRapport(players_list=None, order=0):
+def all_player_rapport(players_list=None, order=0):
     """
     display
     :param order:

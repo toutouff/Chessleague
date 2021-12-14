@@ -1,3 +1,5 @@
+from Controler.InputChecker import Checkinput
+
 def menu_tournament():
     """
     first menu for managing tournament
@@ -9,8 +11,7 @@ def menu_tournament():
     print("\t 2 - Afficher tout les tournois ")
     print("\t 3 - Initialiser un tournoi")
     print("\t 0 - Retour")
-    response = input("=> ")
-    return response
+    return Checkinput.int("=> ")
 
 
 def new_tournament():
@@ -21,16 +22,16 @@ def new_tournament():
     print("Bienvenue sur la page de création de tournoi")
     print("création d'un nouveau tournoi")
     info_tournament = {
-        "name": input("nom du tournois: "),
-        "location": input("location du tournoi: "),
-        "number_of_player": input("nombre de joueurs: "),
-        "start_day": input("jour de début: "),
-        "end_day": input("jour de fin: "),
-        "month": input("mois: "),
-        "year": input("année: "),
-        "time_mode": input(
+        "name": Checkinput.str("nom du tournois: "),
+        "location": Checkinput.str("location du tournoi: "),
+        "number_of_player": Checkinput.pair("nombre de joueurs: "),
+        "start_day": Checkinput.int("jour de début: "),
+        "end_day": Checkinput.int("jour de fin: "),
+        "month": Checkinput.int("mois: "),
+        "year": Checkinput.int("année: "),
+        "time_mode": Checkinput.str(
             "mode de jeux(un bullet, un blitz ou un coup rapide): "),
-        "description": input("description: ")
+        "description": Checkinput.str("description: ")
 
     }
     return info_tournament
@@ -52,8 +53,7 @@ def menu_tournament_initialized(tournament):
     print("\t 1 - créer un nouveau tournoi")
     print("\t 2 - accéder au tournoi initialisé")
     print("\t 0 - retour")
-    response = int(input("=> "))
-    return response
+    return Checkinput.int("=> ")
 
 
 def menu_active_tournament(tournament):
@@ -77,8 +77,7 @@ def menu_active_tournament(tournament):
     print("\t 4 - Générer le premier tour")
     print("\t 5 - Lancer le tournoi")
     print("\t 0 - Retour")
-    response = input("=> ")
-    return response
+    return Checkinput.int("=>")
 
 
 def view_info_tournament(i, tournament):
@@ -110,8 +109,7 @@ def menu_active_turn(tournament):
     print("\t 2 - Entrez un resultat")
     print("\t 3 - Générer le prochain tour ")
     print("\t 0 - Retour")
-    response = int(input("=> "))
-    return response
+    return Checkinput.int("=>")
 
 
 def tournament_is_full(tournament):
