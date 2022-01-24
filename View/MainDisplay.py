@@ -11,4 +11,4 @@ def menu_principal():
     print("\t 2 - Menu des tournoi")
     print("\t 3 - Menu des Rapport")
     print("\t 0 - Quitter")
-    return Checkinput.int("=>")
+    return Checkinput.int("=>",3)

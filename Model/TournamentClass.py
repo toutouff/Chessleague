@@ -1,6 +1,9 @@
 from datetime import datetime
+from operator import attrgetter
+
 from tinydb import TinyDB
 from Model.TurnClass import Turn
+
 
 
 class Tournament:
@@ -132,6 +135,14 @@ class Tournament:
             tournament_list.append(Tournament(tournament))
         return tournament_list
 
+    def add_fought_player(self, pair):
+        player_index = self.players_list.index(pair[0])
+        oppo_index = self.players_list.index(pair[1])
+        self.players_list[player_index].fought_player_index.append(
+            oppo_index)
+        self.players_list[oppo_index].fought_player_index.append(
+            player_index)
+
 
 def pairs_generator_for_turn_1(players_list):
     """
@@ -140,12 +151,10 @@ def pairs_generator_for_turn_1(players_list):
     :return: pairs_list
     """
 
-    def get_rank(player):
-        return int(player.rank)
 
     pairs_list = []
     number_of_pairs = int(len(players_list) / 2)
-    ranked_players = sorted(players_list, key=get_rank)
+    ranked_players = sorted(players_list, key=attrgetter('rank'))
 
     print("nombre de pairs a genéré est de " + str(number_of_pairs))
 
@@ -156,22 +165,29 @@ def pairs_generator_for_turn_1(players_list):
 
 
 def pairs_generator(players_list):
-    """
-    generateur de pair se basant sur le score du joueurs
-    :param players_list:
-    :return: pairs_list
-    """
+    def pair_tester(pair):
+        fpi_list_size = int((pair[0].fought_player_index))
+        if players_list[pair[0].fought_player_index[fpi_list_size - 1]] == pair[
+            1] or players_list[
+            pair[1].fought_player_index[fpi_list_size - 1]] == pair[0]:
+            return True
 
-    def get_score(player):
-        return int(player.score_in_game)
-
+    alone_player = False
     pairs_list = []
-    number_of_pairs = int(len(players_list) / 2)
-    ordered_players_by_score = sorted(players_list, key=get_score)
-    print("nombre de pairs a genéré est de " + str(number_of_pairs))
-
-    for i in range(number_of_pairs):
-        pair = [ordered_players_by_score[i],
-                ordered_players_by_score[i + number_of_pairs]]
+    scored_players = sorted(players_list, key=attrgetter('score_in_game', 'rank'),
+                            reverse=True)
+    for i in range(0, len(players_list), 2):
+        if alone_player and i < len(scored_players)-2:
+            pair = [scored_players[i], scored_players[i + 2]]
+            i += 1
+        else:
+            pair = [scored_players[i], scored_players[i + 1]]
+        if pair_tester(pair) and i < len(scored_players)-2:
+            print(str(pair[0]) + "+" + str(pair[1]))
+            pair = [scored_players[i], scored_players[i + 2]]
+            i -= 1
+            alone_player = True
         pairs_list.append(pair)
     return pairs_list
+
+

@@ -12,6 +12,11 @@ class Player:
         self.first_name = self.data_player["prenom"]
         self.rank = self.data_player["rank"]
         self.score_in_game = int(self.data_player["score in game"])
+        self.fought_player_index = self.data_player['fought player']
+
+    def __str__(self):
+        str = self.name + " " + self.first_name
+        return str
 
     def save(self):
         """

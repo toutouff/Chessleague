@@ -14,7 +14,7 @@ def rapport_menu_display():
     print("\t 3 - Faire un rapport de tout les joueurs par rang")
     print("\t 4 - Faire un rapport sur un tournoi")
     print("\t 0 - Retour")
-    return Checkinput.int("=> ")
+    return Checkinput.int("=> ",4)
 
 
 def rapport_tournament_menu_display():
@@ -29,7 +29,7 @@ def rapport_tournament_menu_display():
     print("\t 3 - Faire un rapport de tout les tours")
     print("\t 4 - Faire un rapport de tout les matchs")
     print("\t 0 - Retour")
-    return Checkinput.int("=>")
+    return Checkinput.int("=>",4)
 
 
 def all_turn_rapport(turn_data):
