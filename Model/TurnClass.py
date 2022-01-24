@@ -1,5 +1,6 @@
-from Model.MatchClass import Match
 import datetime
+
+from Model.MatchClass import Match
 
 
 class Turn:

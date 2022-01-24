@@ -1,5 +1,6 @@
 from Controler.InputChecker import Checkinput
 
+
 def menu_tournament():
     """
     first menu for managing tournament
@@ -11,7 +12,7 @@ def menu_tournament():
     print("\t 2 - Afficher tout les tournois ")
     print("\t 3 - Initialiser un tournoi")
     print("\t 0 - Retour")
-    return Checkinput.int("=> ")
+    return Checkinput.int("=> ", 3)
 
 
 def new_tournament():
@@ -25,10 +26,10 @@ def new_tournament():
         "name": Checkinput.str("nom du tournois: "),
         "location": Checkinput.str("location du tournoi: "),
         "number_of_player": Checkinput.pair("nombre de joueurs: "),
-        "start_day": Checkinput.int("jour de début: "),
-        "end_day": Checkinput.int("jour de fin: "),
-        "month": Checkinput.int("mois: "),
-        "year": Checkinput.int("année: "),
+        "start_day": Checkinput.int("jour de début: ", 31),
+        "end_day": Checkinput.int("jour de fin: ", 31),
+        "month": Checkinput.int("mois: ", 12),
+        "year": Checkinput.int("année: ", 3000),
         "time_mode": Checkinput.str(
             "mode de jeux(un bullet, un blitz ou un coup rapide): "),
         "description": Checkinput.str("description: ")
@@ -53,7 +54,7 @@ def menu_tournament_initialized(tournament):
     print("\t 1 - créer un nouveau tournoi")
     print("\t 2 - accéder au tournoi initialisé")
     print("\t 0 - retour")
-    return Checkinput.int("=> ")
+    return Checkinput.int("=> ", 2)
 
 
 def menu_active_tournament(tournament):
@@ -77,7 +78,7 @@ def menu_active_tournament(tournament):
     print("\t 4 - Générer le premier tour")
     print("\t 5 - Lancer le tournoi")
     print("\t 0 - Retour")
-    return Checkinput.int("=>")
+    return Checkinput.int("=>", 5)
 
 
 def view_info_tournament(i, tournament):
@@ -109,7 +110,7 @@ def menu_active_turn(tournament):
     print("\t 2 - Entrez un resultat")
     print("\t 3 - Générer le prochain tour ")
     print("\t 0 - Retour")
-    return Checkinput.int("=>")
+    return Checkinput.int("=>", 3)
 
 
 def tournament_is_full(tournament):

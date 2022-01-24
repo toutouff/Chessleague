@@ -3,11 +3,13 @@ class Checkinput:
         pass
 
     @staticmethod
-    def int(question):
+    def int(question, max_entry=1000):
         is_valid = False
-        while is_valid is False:
+        while not is_valid:
             entry = input(question)
             is_valid = Checkinput.int_tester(entry)
+            if is_valid:
+                is_valid = Checkinput.int_max(entry, max_entry)
         return entry
 
     @staticmethod
@@ -30,6 +32,7 @@ class Checkinput:
     def int_tester(value):
         try:
             int(value)
+
             return True
         except ValueError:
             return False
@@ -51,5 +54,12 @@ class Checkinput:
                 return True
             else:
                 return False
+        else:
+            return False
+
+    @staticmethod
+    def int_max(entry, max_entry):
+        if int(entry) <= int(max_entry):
+            return True
         else:
             return False

@@ -1,6 +1,7 @@
 from tinydb import TinyDB
-from Controler.InputChecker import Checkinput
+
 from Controler import Player
+from Controler.InputChecker import Checkinput
 from Model import PlayerClass
 from Model import TournamentClass
 from View import PlayerDisplay
@@ -54,20 +55,30 @@ def active_tournament_menu(tournament):
         elif response == str(3):
             if not tournament.number_of_player == len(tournament.players_list):
                 temp_player = init_player_by_name()
-                if not temp_player == str(0):
-                    tournament.add_player(temp_player)
-                    tournament.update_players_list()
+                is_player_in = tournament.players_data.count(
+                    temp_player.data_player)
+                if is_player_in >= 1:
+                    print("le joueurs est deja inscrit")
+                else:
+                    print(tournament.players_list.count(temp_player))
+                    if not temp_player == str(0):
+                        tournament.add_player(temp_player)
+                        tournament.update_players_list()
             else:
                 TournamentDisplay.tournament_is_full(tournament)
         elif response == str(4):
             if len(tournament.players_list) == tournament.number_of_player:
                 tournament.launch()
+                for pair in tournament.active_turn.pairs_list:
+                    tournament.add_fought_player(pair)
             else:
                 print("le nombre de joueurs nécéssaire n'est pas atteint")
         elif response == str(5):
-            if len(tournament.players_list)==tournament.number_of_player:
+            if len(tournament.players_list) == tournament.number_of_player:
                 if tournament.active_turn == 0:
                     tournament.launch()
+                    for pair in tournament.active_turn.pairs_list:
+                        tournament.add_fought_player(pair)
                     launch_tournament(tournament)
                     update_turn_list(tournament)
                 else:
@@ -227,7 +238,8 @@ def end_a_match(tournament):
     if len(turn.match_list) == match_over:
         print("le tour est fini")
     else:
-        response = Checkinput.int("quelle match est fini ?\n=> ")
+        response = Checkinput.int("quelle match est fini ?\n=> ",
+                                  len(turn.match_list))
         match = turn.match_list[int(response) - 1]
         if not match.is_over:
             match.get_result()
@@ -252,6 +264,8 @@ def launch_tournament(tournament):
             if over_tester(tournament.active_turn.match_list):
                 tournament.active_turn.is_over = True
                 tournament.next_turn()
+                for pair in tournament.active_turn.pairs_list:
+                    tournament.add_fought_player(pair)
                 update_turn_list(tournament)
             else:
                 print("tout les match ne sont pas fini")

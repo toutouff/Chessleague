@@ -1,5 +1,5 @@
 # coding=utf-8
-from Controler.InputChecker import *
+from Controler.InputChecker import Checkinput
 
 
 def menu_player():
@@ -12,7 +12,7 @@ def menu_player():
     print("\t 1 - Afficher la liste des joueurs ")
     print("\t 2 - Créer un nouveau joueur ")
     print("\t 0 - Menu principal")
-    return Checkinput.int("=> ")
+    return Checkinput.int("=> ", 2)
 
 
 def new_player():
@@ -24,10 +24,11 @@ def new_player():
     info_player = {
         "nom": Checkinput.str("nom : "),
         "prenom": Checkinput.str("prenom :"),
-        "date de naissance": Checkinput.int("année de naissance :"),
+        "date de naissance": Checkinput.int("année de naissance :", 2022),
         "genre": Checkinput.str("genre :"),
-        "rank": Checkinput.int("classement :"),
-        "score in game": 0
+        "rank": Checkinput.int("classement :", 5000),
+        "score in game": 0,
+        "fought player": []
     }
     return info_player
 
