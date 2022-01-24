@@ -1,6 +1,6 @@
 from Controler import Player
-from Controler import Tournament
 from Controler import Rapport
+from Controler import Tournament
 from View import MainDisplay
 
 

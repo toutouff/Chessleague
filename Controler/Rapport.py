@@ -1,4 +1,5 @@
 from tinydb import TinyDB
+
 from Controler.Tournament import init_tournament
 from View.RapportDisplay import rapport_menu_display, all_tournament_rapport, \
     all_player_rapport, rapport_tournament_menu_display, all_turn_rapport, \

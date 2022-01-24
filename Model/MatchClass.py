@@ -1,5 +1,5 @@
-from Model.PlayerClass import Player
 from Controler.InputChecker import Checkinput
+from Model.PlayerClass import Player
 
 
 class Match:

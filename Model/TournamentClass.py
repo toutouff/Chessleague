@@ -2,8 +2,8 @@ from datetime import datetime
 from operator import attrgetter
 
 from tinydb import TinyDB
-from Model.TurnClass import Turn
 
+from Model.TurnClass import Turn
 
 
 class Tournament:
@@ -151,7 +151,6 @@ def pairs_generator_for_turn_1(players_list):
     :return: pairs_list
     """
 
-
     pairs_list = []
     number_of_pairs = int(len(players_list) / 2)
     ranked_players = sorted(players_list, key=attrgetter('rank'))
@@ -166,28 +165,28 @@ def pairs_generator_for_turn_1(players_list):
 
 def pairs_generator(players_list):
     def pair_tester(pair):
-        fpi_list_size = int((pair[0].fought_player_index))
-        if players_list[pair[0].fought_player_index[fpi_list_size - 1]] == pair[
-            1] or players_list[
-            pair[1].fought_player_index[fpi_list_size - 1]] == pair[0]:
+        fpi_list_size = int(pair[0].fought_player_index)
+        if players_list[pair[0].fought_player_index[fpi_list_size - 1]] == \
+                pair[
+                    1] or players_list[
+                pair[1].fought_player_index[fpi_list_size - 1]] == pair[0]:
             return True
 
     alone_player = False
     pairs_list = []
-    scored_players = sorted(players_list, key=attrgetter('score_in_game', 'rank'),
+    scored_players = sorted(players_list,
+                            key=attrgetter('score_in_game', 'rank'),
                             reverse=True)
     for i in range(0, len(players_list), 2):
-        if alone_player and i < len(scored_players)-2:
+        if alone_player and i < len(scored_players) - 2:
             pair = [scored_players[i], scored_players[i + 2]]
             i += 1
         else:
             pair = [scored_players[i], scored_players[i + 1]]
-        if pair_tester(pair) and i < len(scored_players)-2:
+        if pair_tester(pair) and i < len(scored_players) - 2:
             print(str(pair[0]) + "+" + str(pair[1]))
             pair = [scored_players[i], scored_players[i + 2]]
             i -= 1
             alone_player = True
         pairs_list.append(pair)
     return pairs_list
-
-

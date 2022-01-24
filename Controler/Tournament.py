@@ -1,6 +1,7 @@
 from tinydb import TinyDB
-from Controler.InputChecker import Checkinput
+
 from Controler import Player
+from Controler.InputChecker import Checkinput
 from Model import PlayerClass
 from Model import TournamentClass
 from View import PlayerDisplay
@@ -54,7 +55,8 @@ def active_tournament_menu(tournament):
         elif response == str(3):
             if not tournament.number_of_player == len(tournament.players_list):
                 temp_player = init_player_by_name()
-                is_player_in = tournament.players_data.count(temp_player.data_player)
+                is_player_in = tournament.players_data.count(
+                    temp_player.data_player)
                 if is_player_in >= 1:
                     print("le joueurs est deja inscrit")
                 else:
@@ -72,7 +74,7 @@ def active_tournament_menu(tournament):
             else:
                 print("le nombre de joueurs nécéssaire n'est pas atteint")
         elif response == str(5):
-            if len(tournament.players_list)==tournament.number_of_player:
+            if len(tournament.players_list) == tournament.number_of_player:
                 if tournament.active_turn == 0:
                     tournament.launch()
                     for pair in tournament.active_turn.pairs_list:
@@ -236,7 +238,8 @@ def end_a_match(tournament):
     if len(turn.match_list) == match_over:
         print("le tour est fini")
     else:
-        response = Checkinput.int("quelle match est fini ?\n=> ",len(turn.match_list))
+        response = Checkinput.int("quelle match est fini ?\n=> ",
+                                  len(turn.match_list))
         match = turn.match_list[int(response) - 1]
         if not match.is_over:
             match.get_result()
